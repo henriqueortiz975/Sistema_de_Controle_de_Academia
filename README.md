@@ -23,6 +23,8 @@ O sistema deverá possuir interface moderna, organizada e responsiva.
 
 ## Sistema de Controle de Academia
 
+integrantes: Henrique Ibarra Ortiz Urbano e Arthur da Silva Veeck
+
 Funcionalidades mínimas:
 
 - Cadastro de alunos;
