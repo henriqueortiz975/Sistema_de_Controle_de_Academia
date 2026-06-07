@@ -2,39 +2,145 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
+    font-family:'Segoe UI',sans-serif;
 }
 
-header{
-    background: linear-gradient(270deg, #0e3397, #0e3ec2, #1042cc);
-    color:#fff;
-    margin:2px;
-    padding:20px;
-    text-align:center;
-    border-radius:10px;
-    box-shadow:0 4px 8px rgba(0,0,0,0.2);
-}
-
-header h1{
-    font-size:2rem;
+body{
+    background:#f4f6f9;
 }
 
 .container{
     display:flex;
-    justify-content:space-around;
-    margin:20px;
+    min-height:100vh;
 }
 
-.esquerda{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    padding:20px;
+.Esquerda{
+    width:280px;
+    background:linear-gradient(180deg,#0e3397,#1042cc);
+    color:white;
+    padding:25px;
 }
 
-.direita{
+.Esquerda h1{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.Esquerda ul{
+    list-style:none;
+}
+
+.Esquerda li{
+    margin-bottom:15px;
+}
+
+.Esquerda button{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:8px;
+    background:white;
+    color:#1042cc;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.Esquerda button:hover{
+    transform:translateX(5px);
+}
+
+.content{
+    flex:1;
+    padding:40px;
+}
+
+.section{
+    display:none;
+}
+
+.section.active{
+    display:block;
+}
+
+.card{
+    background:white;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 4px 10px rgba(0,0,0,.1);
+    margin-bottom:30px;
+}
+
+h2{
+    color:#1042cc;
+    margin-bottom:20px;
+}
+
+form{
     display:flex;
     flex-direction:column;
-    align-items:center;
-    padding:20px;
+    gap:15px;
+}
+
+input, select{
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+}
+
+.btn{
+    background:#1042cc;
+    color:white;
+    border:none;
+    padding:12px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#1042cc;
+    color:white;
+}
+
+th, td{
+    border:1px solid #ddd;
+    padding:12px;
+    text-align:center;
+}
+
+.stats{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.stat{
+    flex:1;
+    min-width:220px;
+    background:#1042cc;
+    color:white;
+    text-align:center;
+    padding:25px;
+    border-radius:10px;
+}
+
+.stat h3{
+    font-size:2rem;
+}
+
+@media(max-width:768px){
+
+    .container{
+        flex-direction:column;
+    }
+
+    .Esquerda{
+        width:100%;
+    }
+
 }
