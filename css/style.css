@@ -15,14 +15,16 @@ body{
 }
 
 .Esquerda{
-    width:280px;
+    width:300px;
     background:linear-gradient(180deg,#0e3397,#1042cc);
     color:white;
     padding:25px;
+    box-shadow:4px 0 10px rgba(0,0,0,.15);
 }
 
 .Esquerda h1{
     text-align:center;
+    font-size:1.8rem;
     margin-bottom:40px;
 }
 
@@ -44,10 +46,12 @@ body{
     font-weight:bold;
     cursor:pointer;
     transition:.3s;
+    font-size:1rem;
 }
 
 .Esquerda button:hover{
     transform:translateX(5px);
+    background:#eef3ff;
 }
 
 .content{
@@ -86,6 +90,12 @@ input, select{
     padding:12px;
     border:1px solid #ccc;
     border-radius:8px;
+    font-size:1rem;
+}
+
+input:focus, select:focus{
+    outline:none;
+    border-color:#1042cc;
 }
 
 .btn{
@@ -95,6 +105,12 @@ input, select{
     padding:12px;
     border-radius:8px;
     cursor:pointer;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.btn:hover{
+    background:#0c34a0;
 }
 
 table{
@@ -113,10 +129,19 @@ th, td{
     text-align:center;
 }
 
+tbody tr:hover{
+    background:#f5f8ff;
+}
+
+.tabelaresumo td, .tabelaresumo th{
+    padding:15px;
+}
+
 .stats{
     display:flex;
     gap:20px;
     flex-wrap:wrap;
+    margin-bottom:30px;
 }
 
 .stat{
@@ -127,13 +152,57 @@ th, td{
     text-align:center;
     padding:25px;
     border-radius:10px;
+    box-shadow:0 4px 8px rgba(0,0,0,.15);
 }
 
 .stat h3{
     font-size:2rem;
+    margin-bottom:10px;
 }
 
-@media(max-width:768px){
+.btn-excluir{
+    background:#dc2626;
+    color:white;
+    border:none;
+    padding:8px 12px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.btn-excluir:hover{
+    background:#b91c1c;
+}
+
+.btn-pago{
+    background:#16a34a;
+    color:white;
+    border:none;
+    padding:8px 12px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.btn-pago:hover{
+    background:#15803d;
+}
+
+.pago{
+    color:#16a34a;
+    font-weight:bold;
+}
+
+.pendente{
+    color:#dc2626;
+    font-weight:bold;
+}
+
+input[type="checkbox"]{
+    width:20px;
+    height:20px;
+    cursor:pointer;
+}
+
+@media(max-width:900px){
 
     .container{
         flex-direction:column;
@@ -143,4 +212,15 @@ th, td{
         width:100%;
     }
 
+    .content{
+        padding:20px;
+    }
+
+    .stats{
+        flex-direction:column;
+    }
+
+    table{
+        font-size:.9rem;
+    }
 }
