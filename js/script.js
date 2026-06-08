@@ -128,9 +128,7 @@ document.getElementById("formTreino").addEventListener("submit",(e)=>{
 
     const exercicio = document.getElementById("nomeTreino").value;
 
-    const tipo = document.getElementById("tipoTreino").value;
-
-    treinos.push({aluno, exercicio, tipo});
+    treinos.push({aluno, exercicio});
 
     salvarDados();
     renderTreinos();
@@ -150,7 +148,6 @@ function renderTreinos(){
         <tr>
             <td>${treino.aluno}</td>
             <td>${treino.exercicio}</td>
-            <td>${treino.tipo}</td>
         </tr>
         `;
 
