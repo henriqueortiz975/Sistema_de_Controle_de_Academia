@@ -70,25 +70,45 @@ function excluirAluno(index){
 
 }
 
+const btnMostrarForm = document.getElementById("btnMostrarForm");
+
+const cardFormulario = document.getElementById("cardFormulario");
+
+btnMostrarForm.addEventListener("click",()=>{
+
+    if(cardFormulario.style.display === "none"){
+        cardFormulario.style.display = "block";
+    }else{
+        cardFormulario.style.display = "none";
+    }
+
+});
+
 function renderAlunos(){
 
-    tabelaAlunos.innerHTML = "";
+    const lista =
+    document.getElementById("listaAlunosCards");
+
+    lista.innerHTML = "";
 
     alunos.forEach((aluno,index)=>{
 
-        tabelaAlunos.innerHTML += `
-        <tr>
-            <td>${aluno.nome}</td>
-            <td>${aluno.idade}</td>
-            <td>${aluno.plano}</td>
-            <td>
-                <button
-                class="btn-excluir"
-                onclick="excluirAluno(${index})">
-                    Excluir
-                </button>
-            </td>
-        </tr>
+        lista.innerHTML += `
+        <div class="aluno-card">
+
+            <h3> ${aluno.nome}</h3>
+
+            <p><strong>Idade:</strong> ${aluno.idade} ano(s) </p>
+
+            <p><strong>Plano:</strong> ${aluno.plano}</p>
+
+            <div class="acoes-card">
+
+                <button class="btn-excluir" onclick="excluirAluno(${index})">Excluir</button>
+
+            </div>
+
+        </div>
         `;
 
     });

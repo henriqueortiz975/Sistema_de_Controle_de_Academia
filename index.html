@@ -79,7 +79,27 @@
         <!-- ALUNOS -->
         <section id="alunos" class="section">
 
-            <div class="card">
+            <div class="card card-topo">
+
+                <div class="topo-alunos">
+
+                    <div>
+
+                        <button id="btnMostrarForm" class="btn bnt-aluno">+ Novo Aluno</button>
+
+                    </div>
+
+                    <div>
+
+                        <input type="text" id="pesquisaAluno" placeholder="Pesquisar aluno...">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="card" id="cardFormulario" style="display:none;">
 
                 <h2>Cadastro de Alunos</h2>
 
@@ -92,8 +112,11 @@
                     <select id="tipoValor">
 
                         <option value="150">1 mês / R$ 150,00</option>
+
                         <option value="400">3 meses / R$ 400,00</option>
+
                         <option value="750">6 meses / R$ 750,00</option>
+
                         <option value="1500">1 ano / R$ 1.500,00</option>
 
                     </select>
@@ -104,26 +127,7 @@
 
             </div>
 
-            <div class="card">
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-                            <th>Nome</th>
-                            <th>Idade</th>
-                            <th>Plano</th>
-                            <th>Ações</th>
-                        </tr>
-
-                    </thead>
-
-                    <tbody id="tabelaAlunos"></tbody>
-
-                </table>
-
-            </div>
+            <div id="listaAlunosCards"></div>
 
         </section>
 
@@ -195,8 +199,8 @@
                         <tr>
                             <th>Nome</th>
                             <th>Valor</th>
-                            <th>Situação</th>
-                            <th>Ação</th>
+                            <th>Status</th>
+                            <th>Ações</th>
                         </tr>
 
                     </thead>

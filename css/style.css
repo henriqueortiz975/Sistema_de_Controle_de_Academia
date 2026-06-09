@@ -5,8 +5,13 @@
     font-family:'Segoe UI',sans-serif;
 }
 
-body{
-    background:#f4f6f9;
+body {
+    background-image: url('https://acadbrasil.com.br/wp-content/uploads/2022/04/3-dicas-para-aproveitar-melhor-o-espaco-da-academia-1024x681.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-blend-mode: darken;
 }
 
 .container{
@@ -16,7 +21,7 @@ body{
 
 .Esquerda{
     width:300px;
-    background:linear-gradient(180deg,#0e3397,#1042cc);
+    background:linear-gradient(180deg,#ceb029,#ccc910);
     color:white;
     padding:25px;
     box-shadow:4px 0 10px rgba(0,0,0,.15);
@@ -26,6 +31,7 @@ body{
     text-align:center;
     font-size:1.8rem;
     margin-bottom:40px;
+    color:#000000
 }
 
 .Esquerda ul{
@@ -41,8 +47,8 @@ body{
     padding:15px;
     border:none;
     border-radius:8px;
-    background:white;
-    color:#1042cc;
+    background:rgb(0, 0, 0);
+    color:#ffffff;
     font-weight:bold;
     cursor:pointer;
     transition:.3s;
@@ -52,6 +58,7 @@ body{
 .Esquerda button:hover{
     transform:translateX(5px);
     background:#eef3ff;
+    color:#000000;
 }
 
 .content{
@@ -68,16 +75,25 @@ body{
 }
 
 .card{
-    background:white;
+    background:rgb(0, 0, 0);
     padding:30px;
     border-radius:12px;
     box-shadow:0 4px 10px rgba(0,0,0,.1);
     margin-bottom:30px;
+    display:flex;
+    flex-direction:column;
 }
 
 h2{
-    color:#1042cc;
+    color:#ceb029;
     margin-bottom:20px;
+    margin-top:-12px;
+}
+
+.bnt-aluno{
+    height:47px;
+    background:#ceb029;
+    color:white;
 }
 
 form{
@@ -88,18 +104,19 @@ form{
 
 input, select{
     padding:12px;
-    border:1px solid #ccc;
+    background:#fdf4cc;
+    border:1px solid #0c0c0c;
     border-radius:8px;
     font-size:1rem;
 }
 
 input:focus, select:focus{
     outline:none;
-    border-color:#1042cc;
+    border-color:#ceb029;
 }
 
 .btn{
-    background:#1042cc;
+    background:#ceb029;
     color:white;
     border:none;
     padding:12px;
@@ -110,7 +127,12 @@ input:focus, select:focus{
 }
 
 .btn:hover{
-    background:#0c34a0;
+    background:#e49e1d;
+    
+}
+
+p{
+    color:#ffffff;
 }
 
 table{
@@ -119,17 +141,22 @@ table{
 }
 
 th{
-    background:#1042cc;
+    background:#ceb029;
     color:white;
 }
 
 th, td{
-    border:1px solid #ddd;
+    border:1px solid #ceb029;
     padding:12px;
     text-align:center;
 }
 
-tbody tr:hover{
+tr{
+    background:#000000;
+    color:white;
+}
+
+tbody{
     background:#f5f8ff;
 }
 
@@ -147,7 +174,7 @@ tbody tr:hover{
 .stat{
     flex:1;
     min-width:220px;
-    background:#1042cc;
+    background:#ceb029;
     color:white;
     text-align:center;
     padding:25px;
@@ -175,7 +202,7 @@ tbody tr:hover{
 
 .btn-pago{
     background:#16a34a;
-    color:white;
+    color:rgb(255, 255, 255);
     border:none;
     padding:8px 12px;
     border-radius:6px;
@@ -200,6 +227,56 @@ input[type="checkbox"]{
     width:20px;
     height:20px;
     cursor:pointer;
+}
+
+.topo-alunos{
+    display:flex;
+    align-items:start;
+    gap:10px;
+}
+
+#listaAlunosCards{
+    display:grid;
+    grid-auto-rows: 1fr 1fr;
+    gap:20px;
+}
+
+#pesquisaAluno{
+    width:788px;
+}
+
+.aluno-card{
+    background:#000000;
+    border:2px solid #ceb029;
+    border-radius:12px;
+    padding:20px;
+    color:white;
+    transition:.3s;
+}
+
+.card-topo{
+    display:grid;
+    grid-template-columns: 1fr auto;
+    align-items:center;
+}
+
+.aluno-card:hover{
+    transform:translateY(-5px);
+}
+
+.aluno-card h3{
+    color:#ceb029;
+    margin-bottom:10px;
+}
+
+.aluno-card p{
+    margin:8px 0;
+}
+
+.acoes-card{
+    margin-top:15px;
+    display:flex;
+    gap:10px;
 }
 
 @media(max-width:900px){
