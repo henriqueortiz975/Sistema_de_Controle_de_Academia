@@ -8,88 +8,84 @@
 </head>
 <body>
 
-<div class="container">
+    <div id="overlay" class="overlay"></div>
 
-    <aside class="Esquerda">
+    <div class="container">
 
-        <h1>Sistema de Controle de Academia</h1>
+        <aside class="Esquerda">
 
-        <nav>
-            <ul>
-                <li><button onclick="mostrar('home')">🏠 Home</button></li>
-                <li><button onclick="mostrar('alunos')">👨‍🎓 Cadastro de Alunos</button></li>
-                <li><button onclick="mostrar('treinos')">💪 Cadastro de Treinos</button></li>
-                <li><button onclick="mostrar('pagamentos')">💸 Controle de Pagamentos</button></li>
-                <li><button onclick="mostrar('frequencia')">🏋️ Controle de Frequência</button></li>
-                <li><button onclick="mostrar('relatorios')">📊 Relatórios</button></li>
-            </ul>
-        </nav>
+            <h1>Sistema de Controle de Academia</h1>
 
-    </aside>
+            <nav>
+                <ul>
+                    <li><button onclick="mostrar('home')">🏠 Home</button></li>
+                    <li><button onclick="mostrar('alunos')">👨‍🎓 Cadastro de Alunos</button></li>
+                    <li><button onclick="mostrar('treinos')">💪 Cadastro de Treinos</button></li>
+                    <li><button onclick="mostrar('pagamentos')">💸 Controle de Pagamentos</button></li>
+                    <li><button onclick="mostrar('frequencia')">🏋️ Controle de Frequência</button></li>
+                    <li><button onclick="mostrar('relatorios')">📊 Relatórios</button></li>
+                </ul>
+            </nav>
 
-    <main class="content">
+        </aside>
 
-        <!-- HOME -->
-        <section id="home" class="section active">
+        <main class="content">
 
-            <div class="card">
+            <!-- HOME -->
+            <section id="home" class="section active">
 
-                <h2>Visão Geral</h2>
+                <div class="card">
 
-                <p>Sistema desenvolvido para gerenciamento de alunos, treinos, pagamentos e frequência da academia.</p>
+                    <h2>Visão Geral</h2>
 
-            </div>
+                    <p>Sistema desenvolvido para gerenciamento de alunos, treinos, pagamentos e frequência da academia.</p>
 
-            <div class="card">
+                </div>
 
-                <h2>Criado por</h2>
+                <div class="card">
 
-                <table class="tabelaresumo">
+                    <h2>Criado por</h2>
 
-                    <thead>
-                        <tr>
-                            <th>Pessoa</th>
-                            <th>Github</th>
-                            <th>Gmail</th>
-                        </tr>
-                    </thead>
+                    <table class="tabelaresumo">
 
-                    <tbody>
+                        <thead>
+                            <tr>
+                                <th>Pessoa</th>
+                                <th>Github</th>
+                                <th>Gmail</th>
+                            </tr>
+                        </thead>
 
-                        <tr>
-                            <td>Henrique Ibarra Ortiz Urbano</td>
-                            <td>henriqueortiz975</td>
-                            <td>henriqueortiz3090@gmail.com</td>
-                        </tr>
+                        <tbody>
 
-                        <tr>
-                            <td>Arthur da Silva Veeck</td>
-                            <td>ArthurVeeck</td>
-                            <td>arthur.silva.veeck@gmail.com</td>
-                        </tr>
+                            <tr>
+                                <td>Henrique Ibarra Ortiz Urbano</td>
+                                <td>henriqueortiz975</td>
+                                <td>henriqueortiz3090@gmail.com</td>
+                            </tr>
 
-                    </tbody>
+                            <tr>
+                                <td>Arthur da Silva Veeck</td>
+                                <td>ArthurVeeck</td>
+                                <td>arthur.silva.veeck@gmail.com</td>
+                            </tr>
 
-                </table>
+                        </tbody>
 
-            </div>
+                    </table>
 
-        </section>
+                </div>
 
-        <!-- ALUNOS -->
-        <section id="alunos" class="section">
+            </section>
 
-            <div class="card card-topo">
+            <!-- ALUNOS -->
+            <section id="alunos" class="section">
 
-                <div class="topo-alunos">
+                <div class="card card-topo">
 
-                    <div>
+                    <div class="topo-alunos">
 
                         <button id="btnMostrarForm" class="btn bnt-aluno">+ Novo Aluno</button>
-
-                    </div>
-
-                    <div>
 
                         <input type="text" id="pesquisaAluno" placeholder="Pesquisar aluno...">
 
@@ -97,188 +93,218 @@
 
                 </div>
 
-            </div>
+                <div id="listaAlunosCards"></div>
 
-            <div class="card" id="cardFormulario" style="display:none;">
+            </section>
 
-                <h2>Cadastro de Alunos</h2>
+            <!-- TREINOS -->
+            <section id="treinos" class="section">
 
-                <form id="formAluno">
+                <div class="card">
 
-                    <input type="text" id="nome" placeholder="Nome completo" required>
+                    <h2>Cadastro de Treinos</h2>
 
-                    <input type="number" id="idade" min="1" max="150" placeholder="Idade" required>
+                    <form id="formTreino">
 
-                    <select id="tipoValor">
+                        <input type="text" id="nomeTreino" placeholder="Nome do Exercício" required>
 
-                        <option value="150">1 mês / R$ 150,00</option>
+                        <select id="DiaSemana" required>
 
-                        <option value="400">3 meses / R$ 400,00</option>
+                            <option>Segunda-feira</option>
+                            <option>Terça-feira</option>
+                            <option>Quarta-feira</option>
+                            <option>Quinta-feira</option>
+                            <option>Sexta-feira</option>
 
-                        <option value="750">6 meses / R$ 750,00</option>
+                        </select>
 
-                        <option value="1500">1 ano / R$ 1.500,00</option>
+                        <button class="btn">Salvar Treino</button>
 
-                    </select>
+                    </form>
 
-                    <button class="btn">Cadastrar Aluno</button>
-
-                </form>
-
-            </div>
-
-            <div id="listaAlunosCards"></div>
-
-        </section>
-
-        <!-- TREINOS -->
-        <section id="treinos" class="section">
-
-            <div class="card">
-
-                <h2>Cadastro de Treinos</h2>
-
-                <form id="formTreino">
-
-                    <select id="alunoTreino" required></select>
-
-                    <input type="text" id="nomeTreino" placeholder="Nome do Exercício" required>
-
-                    <button class="btn">Salvar Treino</button>
-
-                </form>
-
-            </div>
-
-            <div class="card">
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-                            <th>Aluno</th>
-                            <th>Exercício</th>
-                        </tr>
-
-                    </thead>
-
-                    <tbody id="tabelaTreinos"></tbody>
-
-                </table>
-
-            </div>
-
-        </section>
-
-        <!-- PAGAMENTOS -->
-        <section id="pagamentos" class="section">
-
-            <div class="stats">
-
-                <div class="stat">
-                    <h3 id="valorRecebido">R$ 0</h3>
-                    <p>Valor Recebido</p>
                 </div>
 
-                <div class="stat">
-                    <h3 id="faltamPagar">0</h3>
-                    <p>Faltam Pagar</p>
+                <div class="Semana">
+
+                    <div class="card">
+                        <h2>Segunda-feira</h2>
+                        <div id="segunda"></div>
+                    </div>
+
+                    <div class="card">
+                        <h2>Terça-feira</h2>
+                        <div id="terca"></div>
+                    </div>
+
+                    <div class="card">
+                        <h2>Quarta-feira</h2>
+                        <div id="quarta"></div>
+                    </div>
+
+                    <div class="card">
+                        <h2>Quinta-feira</h2>
+                        <div id="quinta"></div>
+                    </div>
+
+                    <div class="card">
+                        <h2>Sexta-feira</h2>
+                        <div id="sexta"></div>
+                    </div>
                 </div>
 
-            </div>
+            </section>
 
-            <div class="card">
-
-                <h2>Controle de Pagamentos</h2>
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-                            <th>Nome</th>
-                            <th>Valor</th>
-                            <th>Status</th>
-                            <th>Ações</th>
-                        </tr>
-
-                    </thead>
-
-                    <tbody id="tabelaPagamentos"></tbody>
-
-                </table>
-
-            </div>
-
-        </section>
-
-        <!-- FREQUÊNCIA -->
-        <section id="frequencia" class="section">
-
-            <div class="card">
-
-                <h2>Controle de Frequência</h2>
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-                            <th>Nome</th>
-                            <th>Veio Hoje</th>
-                        </tr>
-
-                    </thead>
-
-                    <tbody id="tabelaFrequencia"></tbody>
-
-                </table>
-
-            </div>
-
-        </section>
-
-        <!-- RELATÓRIOS -->
-        <section id="relatorios" class="section">
-
-            <div class="card">
-
-                <h2>Relatórios</h2>
+            <!-- PAGAMENTOS -->
+            <section id="pagamentos" class="section">
 
                 <div class="stats">
 
                     <div class="stat">
-                        <h3 id="totalAlunos">0</h3>
-                        <p>Alunos</p>
+                        <h3 id="valorRecebido">R$ 0</h3>
+                        <p>Valor Recebido</p>
                     </div>
 
                     <div class="stat">
-                        <h3 id="totalTreinos">0</h3>
-                        <p>Treinos</p>
-                    </div>
-
-                    <div class="stat">
-                        <h3 id="totalPagamentos">0</h3>
-                        <p>Pagamentos</p>
-                    </div>
-
-                    <div class="stat">
-                        <h3 id="totalFrequencia">0</h3>
-                        <p>Presenças Hoje</p>
+                        <h3 id="faltamPagar">0</h3>
+                        <p>Faltam Pagar</p>
                     </div>
 
                 </div>
 
-            </div>
+                <div class="card">
 
-        </section>
+                    <h2>Controle de Pagamentos</h2>
 
-    </main>
+                    <table>
 
-</div>
+                        <thead>
 
-<script src="js/script.js"></script>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Valor</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="tabelaPagamentos"></tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+            <!-- FREQUÊNCIA -->
+            <section id="frequencia" class="section">
+
+                <div class="card">
+
+                    <h2>Controle de Frequência</h2>
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Nome</th>
+                                <th>Veio Hoje</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="tabelaFrequencia"></tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+            <!-- RELATÓRIOS -->
+            <section id="relatorios" class="section">
+
+                <div class="card">
+
+                    <h2>Relatórios</h2>
+
+                    <div class="stats">
+
+                        <div class="stat">
+                            <h3 id="totalAlunos">0</h3>
+                            <p>Alunos</p>
+                        </div>
+
+                        <div class="stat">
+                            <h3 id="totalTreinos">0</h3>
+                            <p>Treinos</p>
+                        </div>
+
+                        <div class="stat">
+                            <h3 id="totalPagamentos">0</h3>
+                            <p>Pagamentos</p>
+                        </div>
+
+                        <div class="stat">
+                            <h3 id="totalFrequencia">0</h3>
+                            <p>Presenças Hoje</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- Modal Cadastro -->
+    <div id="cardFormulario" class="modal">
+
+        <h2>Cadastro de Alunos</h2>
+
+        <form id="formAluno">
+
+            <input type="text" id="nome" placeholder="Nome completo" required>
+
+            <input type="number" id="idade" min="1" max="150" placeholder="Idade" required>
+
+            <select id="tipoValor" required>
+
+                <option value="150">1 mês / R$ 150,00</option>
+                <option value="400">3 meses / R$ 400,00</option>
+                <option value="750">6 meses / R$ 750,00</option>
+                <option value="1500">1 ano / R$ 1.500,00</option>
+
+            </select>
+
+            <button class="btn">Cadastrar Aluno</button>
+
+        </form>
+
+    </div>
+
+    <!-- Modal Editar -->
+    <div id="modalEditar" class="modal">
+
+        <h2>Editar Aluno</h2>
+
+        <form id="formEditarAluno">
+
+            <input type="text" id="editarNome" required>
+
+            <input type="number" id="editarIdade" required>
+
+            <button type="submit" class="btn">Salvar Alterações</button>
+
+        </form>
+
+    </div>
+
+    <script src="js/script.js"></script>
 
 </body>
 </html>

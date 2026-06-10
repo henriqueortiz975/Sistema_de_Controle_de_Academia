@@ -1,5 +1,5 @@
 // Usado para limpar os dados armazenados no localStorage
-//localStorage.clear();
+// localStorage.clear();
 
 // NAVEGAÇÃO ENTRE SEÇÕES
 function mostrar(id){
@@ -11,13 +11,30 @@ function mostrar(id){
     document.getElementById(id).classList.add("active");
 
     atualizarRelatorios();
+
 }
 
-
-// Seção de Alunos
+// ALUNOS
 let alunos = JSON.parse(localStorage.getItem("alunos")) || [];
 
-const tabelaAlunos = document.getElementById("tabelaAlunos");
+const btnMostrarForm = document.getElementById("btnMostrarForm");
+
+const cardFormulario = document.getElementById("cardFormulario");
+
+const overlay = document.getElementById("overlay");
+
+const modalEditar = document.getElementById("modalEditar");
+
+let alunoEditando = null;
+
+btnMostrarForm.addEventListener("click",()=>{
+
+    overlay.style.display = "block";
+    cardFormulario.style.display = "block";
+
+    document.body.classList.add("modal-aberto");
+
+});
 
 document.getElementById("formAluno").addEventListener("submit",(e)=>{
 
@@ -43,115 +60,187 @@ document.getElementById("formAluno").addEventListener("submit",(e)=>{
     renderAlunos();
     renderPagamentos();
     renderFrequencia();
-    atualizarSelectAlunos();
     atualizarRelatorios();
 
     e.target.reset();
+
+    cardFormulario.style.display = "none";
+    overlay.style.display = "none";
+
+    document.body.classList.remove("modal-aberto");
 
 });
 
 function excluirAluno(index){
 
+    const confirmar = confirm(`Deseja excluir ${alunos[index].nome}?`);
+
+    if(!confirmar) return;
+
     const nomeAluno = alunos[index].nome;
 
-    alunos.splice(index, 1);
+    alunos.splice(index,1);
 
     pagamentos = pagamentos.filter(p => p.aluno !== nomeAluno);
-
-    treinos = treinos.filter(t => t.aluno !== nomeAluno);
 
     salvarDados();
     renderAlunos();
     renderPagamentos();
-    renderTreinos();
     renderFrequencia();
-    atualizarSelectAlunos();
     atualizarRelatorios();
 
 }
 
-const btnMostrarForm = document.getElementById("btnMostrarForm");
+function renderAlunos(filtro = ""){
 
-const cardFormulario = document.getElementById("cardFormulario");
-
-btnMostrarForm.addEventListener("click",()=>{
-
-    if(cardFormulario.style.display === "none"){
-        cardFormulario.style.display = "block";
-    }else{
-        cardFormulario.style.display = "none";
-    }
-
-});
-
-function renderAlunos(){
-
-    const lista =
-    document.getElementById("listaAlunosCards");
+    const lista = document.getElementById("listaAlunosCards");
 
     lista.innerHTML = "";
 
-    alunos.forEach((aluno,index)=>{
+    const alunosFiltrados = alunos.filter(aluno =>
+
+        aluno.nome.toLowerCase().includes(filtro.toLowerCase())
+
+    );
+
+    alunosFiltrados.forEach(aluno=>{
+
+        const indexOriginal = alunos.indexOf(aluno);
 
         lista.innerHTML += `
+
         <div class="aluno-card">
 
-            <h3> ${aluno.nome}</h3>
+            <h3>${aluno.nome}</h3>
 
-            <p><strong>Idade:</strong> ${aluno.idade} ano(s) </p>
+            <p>
+                <strong>Idade:</strong>
+                ${aluno.idade} ano(s)
+            </p>
 
-            <p><strong>Plano:</strong> ${aluno.plano}</p>
+            <p>
+                <strong>Plano:</strong>
+                ${aluno.plano}
+            </p>
 
             <div class="acoes-card">
 
-                <button class="btn-excluir" onclick="excluirAluno(${index})">Excluir</button>
+                <button
+                    class="btn-editar"
+                    onclick="editarAluno(${indexOriginal})">
+
+                    Editar
+
+                </button>
+
+                <button
+                    class="btn-excluir"
+                    onclick="excluirAluno(${indexOriginal})">
+
+                    Excluir
+
+                </button>
 
             </div>
 
         </div>
+
         `;
 
     });
 
 }
 
-function atualizarSelectAlunos(){
+const campoPesquisa = document.getElementById("pesquisaAluno");
 
-    if(!selectAlunoTreino) return;
+campoPesquisa.addEventListener("keyup",()=>{
 
-    selectAlunoTreino.innerHTML = "";
+    renderAlunos(campoPesquisa.value);
 
-    alunos.forEach(aluno=>{
+});
 
-        selectAlunoTreino.innerHTML += `
-        <option>
-            ${aluno.nome}
-        </option>
-        `;
+function editarAluno(index){
 
-    });
+    alunoEditando = index;
+
+    document.getElementById("editarNome").value = alunos[index].nome;
+
+    document.getElementById("editarIdade").value = alunos[index].idade;
+
+    overlay.style.display = "block";
+
+    modalEditar.style.display = "block";
+
+    document.body.classList.add("modal-aberto");
 
 }
 
-// Seção de Treinos
-let treinos = JSON.parse(localStorage.getItem("treinos")) || [];
+document.getElementById("formEditarAluno").addEventListener("submit",(e)=>{
 
-const tabelaTreinos = document.getElementById("tabelaTreinos");
+    e.preventDefault();
 
-const selectAlunoTreino = document.getElementById("alunoTreino");
+    const nomeAntigo = alunos[alunoEditando].nome;
+
+    const novoNome = document.getElementById("editarNome").value;
+
+    const novaIdade = document.getElementById("editarIdade").value;
+
+    alunos[alunoEditando].nome = novoNome;
+
+    alunos[alunoEditando].idade = novaIdade;
+
+    pagamentos.forEach(p=>{
+
+        if(p.aluno === nomeAntigo){
+
+            p.aluno = novoNome;
+
+        }
+
+    });
+
+    salvarDados();
+    renderAlunos();
+    renderPagamentos();
+    renderFrequencia();
+    atualizarRelatorios();
+
+    modalEditar.style.display = "none";
+    overlay.style.display = "none";
+
+    document.body.classList.remove("modal-aberto");
+
+});
+
+overlay.addEventListener("click",()=>{
+
+    cardFormulario.style.display = "none";
+
+    modalEditar.style.display = "none";
+
+    overlay.style.display = "none";
+
+    document.body.classList.remove("modal-aberto");
+
+});
+
+// TREINOS
+let treinos =JSON.parse(localStorage.getItem("treinos")) || [];
 
 document.getElementById("formTreino").addEventListener("submit",(e)=>{
 
     e.preventDefault();
 
-    const aluno = document.getElementById("alunoTreino").value;
-
     const exercicio = document.getElementById("nomeTreino").value;
 
-    treinos.push({aluno, exercicio});
+    const dia = document.getElementById("DiaSemana").value;
+
+    treinos.push({exercicio, dia});
 
     salvarDados();
+
     renderTreinos();
+
     atualizarRelatorios();
 
     e.target.reset();
@@ -160,22 +249,85 @@ document.getElementById("formTreino").addEventListener("submit",(e)=>{
 
 function renderTreinos(){
 
-    tabelaTreinos.innerHTML = "";
+    document.getElementById("segunda").innerHTML = "";
+    document.getElementById("terca").innerHTML = "";
+    document.getElementById("quarta").innerHTML = "";
+    document.getElementById("quinta").innerHTML = "";
+    document.getElementById("sexta").innerHTML = "";
 
-    treinos.forEach(treino=>{
+    treinos.forEach((treino,index)=>{
 
-        tabelaTreinos.innerHTML += `
-        <tr>
-            <td>${treino.aluno}</td>
-            <td>${treino.exercicio}</td>
-        </tr>
+        let destino;
+
+        switch(treino.dia){
+
+            case "Segunda-feira": destino = document.getElementById("segunda");
+                break;
+
+            case "Terça-feira": destino = document.getElementById("terca");
+                break;
+
+            case "Quarta-feira": destino = document.getElementById("quarta");
+                break;
+
+            case "Quinta-feira": destino = document.getElementById("quinta");
+                break;
+
+            case "Sexta-feira": destino = document.getElementById("sexta");
+                break;
+
+        }
+
+        console.log(treino.dia);
+        console.log(destino);
+
+        if(!destino){console.error("Dia inválido:", treino.dia);
+            return;
+        }
+
+        destino.innerHTML += `
+
+        <div class="aluno-card">
+
+            <h3>${treino.exercicio}</h3>
+
+            <div class="acoes-card">
+
+                <button
+                    class="btn-excluir"
+                    onclick="excluirTreino(${index})">
+
+                    Excluir
+
+                </button>
+
+            </div>
+
+        </div>
+
         `;
 
     });
 
 }
 
-// Seção de Pagamentos
+function excluirTreino(index){
+
+    const confirmar = confirm("Deseja excluir este treino?");
+
+    if(!confirmar) return;
+
+    treinos.splice(index,1);
+
+    salvarDados();
+
+    renderTreinos();
+
+    atualizarRelatorios();
+
+}
+
+// PAGAMENTOS
 let pagamentos = JSON.parse(localStorage.getItem("pagamentos")) || [];
 
 const tabelaPagamentos = document.getElementById("tabelaPagamentos");
@@ -197,6 +349,7 @@ function renderPagamentos(){
     pagamentos.forEach((pagamento,index)=>{
 
         tabelaPagamentos.innerHTML += `
+
         <tr>
 
             <td>
@@ -207,10 +360,17 @@ function renderPagamentos(){
                 R$ ${pagamento.valor}
             </td>
 
-            <td class="${pagamento.pago ? "pago" : "pendente"}">
+            <td
+                class="${
+                    pagamento.pago
+                    ? "pago"
+                    : "pendente"
+                }">
 
                 ${
-                    pagamento.pago ? "Pago" : "Pendente"
+                    pagamento.pago
+                    ? "Pago"
+                    : "Pendente"
                 }
 
             </td>
@@ -226,13 +386,19 @@ function renderPagamentos(){
 
                     :
 
-                    `<button class="btn-pago" onclick="marcarPago(${index})">Confirmar</button>`
+                    `<button
+                        class="btn-pago"
+                        onclick="marcarPago(${index})">
 
+                        Confirmar
+
+                    </button>`
                 }
 
             </td>
 
         </tr>
+
         `;
 
     });
@@ -241,9 +407,7 @@ function renderPagamentos(){
 
 }
 
-// seção de Financeiro
-const tabelaFrequencia = document.getElementById("tabelaFrequencia");
-
+// FINANCEIRO
 function atualizarFinanceiro(){
 
     let recebido = 0;
@@ -254,6 +418,7 @@ function atualizarFinanceiro(){
 
         if(p.pago){
             recebido += Number(p.valor);
+
         }else{
             pendentes++;
         }
@@ -266,7 +431,9 @@ function atualizarFinanceiro(){
 
 }
 
-// seção de Frequência
+// FREQUÊNCIA
+const tabelaFrequencia = document.getElementById("tabelaFrequencia");
+
 function alterarPresenca(index){
 
     alunos[index].presente = !alunos[index].presente;
@@ -283,6 +450,7 @@ function renderFrequencia(){
     alunos.forEach((aluno,index)=>{
 
         tabelaFrequencia.innerHTML += `
+
         <tr>
 
             <td>
@@ -291,24 +459,31 @@ function renderFrequencia(){
 
             <td>
 
-                <input type="checkbox"
+                <input
+                    type="checkbox"
 
-                ${
-                    aluno.presente ? "checked" : ""
-                }
+                    ${
+                        aluno.presente
+                        ? "checked"
+                        : ""
+                    }
 
-                onchange="alterarPresenca(${index})">
+                    onchange="
+                        alterarPresenca(${index})
+                    "
+                >
 
             </td>
 
         </tr>
+
         `;
 
     });
 
 }
 
-// seção de Relatórios
+// RELATÓRIOS
 function atualizarRelatorios(){
 
     document.getElementById("totalAlunos").textContent = alunos.length;
@@ -321,7 +496,7 @@ function atualizarRelatorios(){
 
 }
 
-// seção de Local Storage
+// LOCAL STORAGE
 function salvarDados(){
 
     localStorage.setItem("alunos", JSON.stringify(alunos));
@@ -336,5 +511,4 @@ renderAlunos();
 renderTreinos();
 renderPagamentos();
 renderFrequencia();
-atualizarSelectAlunos();
 atualizarRelatorios();
