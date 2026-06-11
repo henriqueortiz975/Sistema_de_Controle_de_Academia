@@ -5,6 +5,12 @@
     font-family:'Segoe UI',sans-serif;
 }
 
+img{
+    display:block;
+    margin:20px auto;
+    border-radius:1000px;
+}
+
 body{
     background-image:url('https://acadbrasil.com.br/wp-content/uploads/2022/04/3-dicas-para-aproveitar-melhor-o-espaco-da-academia-1024x681.jpg');
     background-size:cover;
