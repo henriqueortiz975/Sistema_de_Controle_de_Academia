@@ -2,27 +2,79 @@
 // DADOS
 // ======================================
 
-let alunos = JSON.parse(localStorage.getItem("alunos")) || [];
-let treinos = JSON.parse(localStorage.getItem("treinos")) || [];
-let pagamentos = JSON.parse(localStorage.getItem("pagamentos")) || [];
-let historico = JSON.parse(localStorage.getItem("historico")) || [];
+let alunos =
+JSON.parse(
+    localStorage.getItem("alunos")
+) || [];
+
+let treinos =
+JSON.parse(
+    localStorage.getItem("treinos")
+) || [];
+
+let pagamentos =
+JSON.parse(
+    localStorage.getItem("pagamentos")
+) || [];
+
+let historico =
+JSON.parse(
+    localStorage.getItem("historico")
+) || [];
 
 let alunoEditando = null;
+let treinoSelecionado = null;
+let pagamentoSelecionado = null;
 
 // ======================================
 // ELEMENTOS
 // ======================================
 
-const btnMostrarForm = document.getElementById("btnMostrarForm");
-const cardFormulario = document.getElementById("cardFormulario");
-const overlay = document.getElementById("overlay");
-const modalEditar = document.getElementById("modalEditar");
+const btnMostrarForm =
+document.getElementById(
+    "btnMostrarForm"
+);
+
+const cardFormulario =
+document.getElementById(
+    "cardFormulario"
+);
+
+const overlay =
+document.getElementById(
+    "overlay"
+);
+
+const modalEditar =
+document.getElementById(
+    "modalEditar"
+);
+
+const modalTreino =
+document.getElementById(
+    "modalTreino"
+);
+
+const modalParticipantes =
+document.getElementById(
+    "modalParticipantes"
+);
 
 const tabelaPagamentos =
-document.getElementById("tabelaPagamentos");
+document.getElementById(
+    "tabelaPagamentos"
+);
 
 const tabelaFrequencia =
-document.getElementById("tabelaFrequencia");
+document.getElementById(
+    "tabelaFrequencia"
+);
+
+const modalPagamento =
+document.getElementById(
+    "modalPagamento"
+);
+
 
 // ======================================
 // NAVEGAÇÃO
@@ -31,14 +83,20 @@ document.getElementById("tabelaFrequencia");
 function mostrar(id){
 
     document
-        .querySelectorAll(".section")
-        .forEach(secao => {
-            secao.classList.remove("active");
-        });
+    .querySelectorAll(".section")
+    .forEach(secao=>{
+
+        secao.classList.remove(
+            "active"
+        );
+
+    });
 
     document
-        .getElementById(id)
-        .classList.add("active");
+    .getElementById(id)
+    .classList.add(
+        "active"
+    );
 
     atualizarRelatorios();
 
@@ -48,10 +106,49 @@ function mostrar(id){
 // MODAIS
 // ======================================
 
-btnMostrarForm.addEventListener("click", () => {
+function fecharModais(){
 
-    overlay.style.display = "block";
-    cardFormulario.style.display = "block";
+    cardFormulario.style.display =
+    "none";
+
+    modalEditar.style.display =
+    "none";
+
+    modalTreino.style.display =
+    "none";
+
+    modalParticipantes.style.display =
+    "none";
+
+    modalPagamento.style.display =
+"none";
+
+    overlay.style.display =
+    "none";
+
+    document.body.classList.remove(
+        "modal-aberto"
+    );
+
+}
+
+overlay.addEventListener(
+    "click",
+    fecharModais
+);
+
+// ======================================
+// ABRIR MODAL ALUNO
+// ======================================
+
+btnMostrarForm.addEventListener(
+"click",()=>{
+
+    overlay.style.display =
+    "block";
+
+    cardFormulario.style.display =
+    "block";
 
     document.body.classList.add(
         "modal-aberto"
@@ -59,13 +156,24 @@ btnMostrarForm.addEventListener("click", () => {
 
 });
 
-overlay.addEventListener("click", () => {
+// ======================================
+// ABRIR MODAL TREINO
+// ======================================
 
-    cardFormulario.style.display = "none";
-    modalEditar.style.display = "none";
-    overlay.style.display = "none";
+document
+.getElementById(
+    "btnNovoTreino"
+)
+.addEventListener(
+"click",()=>{
 
-    document.body.classList.remove(
+    overlay.style.display =
+    "block";
+
+    modalTreino.style.display =
+    "block";
+
+    document.body.classList.add(
         "modal-aberto"
     );
 
@@ -77,44 +185,93 @@ overlay.addEventListener("click", () => {
 
 document
 .getElementById("formAluno")
-.addEventListener("submit", (e) => {
+.addEventListener(
+"submit",
+(e)=>{
 
     e.preventDefault();
 
     const nome =
-    document.getElementById("nome").value;
+    document.getElementById(
+        "nome"
+    ).value;
 
     const idade =
-    document.getElementById("idade").value;
+    document.getElementById(
+        "idade"
+    ).value;
+
+    const gmail =
+    document.getElementById(
+        "gmail"
+    ).value;
+
+    const whatsapp =
+    document.getElementById(
+        "whatsapp"
+    ).value;
 
     const planoSelect =
-    document.getElementById("tipoValor");
+    document.getElementById(
+        "tipoValor"
+    );
+
+    const valor =
+    Number(
+        planoSelect.value
+    );
 
     const plano =
     planoSelect.options[
         planoSelect.selectedIndex
     ].text;
 
-    const valor =
-    Number(planoSelect.value);
+    const meses = {
+
+        150:1,
+        400:3,
+        750:6,
+        1500:12
+
+    }[valor];
 
     alunos.push({
 
         nome,
         idade,
+        gmail,
+        whatsapp,
+
         plano,
+        meses,
+
+        dataCadastro:
+        new Date()
+        .toISOString(),
+
         presente:false
 
     });
 
+    const vencimento =
+    new Date();
+
+    vencimento.setMonth(
+        vencimento.getMonth() +
+        meses
+    );
+
     pagamentos.push({
 
         aluno:nome,
+
         valor,
+
         pago:false,
 
         vencimento:
-        new Date().toLocaleDateString(),
+        vencimento
+        .toISOString(),
 
         formaPagamento:
         "Não definida"
@@ -130,11 +287,21 @@ document
 
     e.target.reset();
 
-    cardFormulario.style.display = "none";
-    overlay.style.display = "none";
+    fecharModais();
 
-    document.body.classList.remove(
-        "modal-aberto"
+});
+// ======================================
+// PESQUISA
+// ======================================
+
+document
+.getElementById("pesquisaAluno")
+.addEventListener(
+"keyup",
+(e)=>{
+
+    renderAlunos(
+        e.target.value
     );
 
 });
@@ -143,7 +310,9 @@ document
 // LISTAR ALUNOS
 // ======================================
 
-function renderAlunos(filtro=""){
+function renderAlunos(
+    filtro = ""
+){
 
     const lista =
     document.getElementById(
@@ -163,40 +332,70 @@ function renderAlunos(filtro=""){
 
     );
 
-    filtrados.forEach(aluno => {
+    filtrados.forEach(aluno=>{
 
         const index =
-        alunos.indexOf(aluno);
+        alunos.indexOf(
+            aluno
+        );
 
         lista.innerHTML += `
 
         <div class="aluno-card">
 
-            <h3>${aluno.nome}</h3>
+            <h3>
+                ${aluno.nome}
+            </h3>
 
             <p>
+
                 <strong>Idade:</strong>
                 ${aluno.idade}
+
             </p>
 
             <p>
+
+                <strong>Gmail:</strong>
+                ${aluno.gmail}
+
+            </p>
+
+            <p>
+
+                <strong>WhatsApp:</strong>
+                ${aluno.whatsapp}
+
+            </p>
+
+            <p>
+
                 <strong>Plano:</strong>
                 ${aluno.plano}
+
             </p>
 
             <div class="acoes-card">
 
                 <button
-                    class="btn-editar"
-                    onclick="editarAluno(${index})">
+                class="btn-editar"
+
+                onclick="
+                editarAluno(
+                ${index}
+                )">
 
                     Editar
 
                 </button>
 
                 <button
-                    class="btn-excluir"
-                    onclick="excluirAluno(${index})">
+                class="btn-excluir"
+
+                onclick="
+                excluirAluno(
+                ${index}
+                )">
 
                     Excluir
 
@@ -213,25 +412,18 @@ function renderAlunos(filtro=""){
 }
 
 // ======================================
-// PESQUISA
-// ======================================
-
-document
-.getElementById("pesquisaAluno")
-.addEventListener("keyup", e => {
-
-    renderAlunos(e.target.value);
-
-});
-
-// ======================================
 // EXCLUIR ALUNO
 // ======================================
 
-function excluirAluno(index){
+function excluirAluno(
+    index
+){
 
-    const confirmar = confirm(
-        `Excluir ${alunos[index].nome}?`
+    const confirmar =
+    confirm(
+
+        `Deseja excluir ${alunos[index].nome}?`
+
     );
 
     if(!confirmar) return;
@@ -239,12 +431,37 @@ function excluirAluno(index){
     const nome =
     alunos[index].nome;
 
-    alunos.splice(index,1);
+    alunos.splice(
+        index,
+        1
+    );
 
     pagamentos =
     pagamentos.filter(
-        p => p.aluno !== nome
+
+        pagamento =>
+
+        pagamento.aluno !==
+        nome
+
     );
+
+    treinos.forEach(
+    treino=>{
+
+        treino.participantes =
+
+        treino.participantes
+        .filter(
+
+            participante=>
+
+            participante !==
+            nome
+
+        );
+
+    });
 
     salvarDados();
 
@@ -259,20 +476,46 @@ function excluirAluno(index){
 // EDITAR ALUNO
 // ======================================
 
-function editarAluno(index){
+function editarAluno(
+    index
+){
 
-    alunoEditando = index;
+    alunoEditando =
+    index;
 
-    document.getElementById(
+    document
+    .getElementById(
         "editarNome"
-    ).value = alunos[index].nome;
+    ).value =
 
-    document.getElementById(
+    alunos[index].nome;
+
+    document
+    .getElementById(
         "editarIdade"
-    ).value = alunos[index].idade;
+    ).value =
 
-    overlay.style.display = "block";
-    modalEditar.style.display = "block";
+    alunos[index].idade;
+
+    document
+    .getElementById(
+        "editarGmail"
+    ).value =
+
+    alunos[index].gmail;
+
+    document
+    .getElementById(
+        "editarWhatsapp"
+    ).value =
+
+    alunos[index].whatsapp;
+
+    overlay.style.display =
+    "block";
+
+    modalEditar.style.display =
+    "block";
 
     document.body.classList.add(
         "modal-aberto"
@@ -281,39 +524,101 @@ function editarAluno(index){
 }
 
 document
-.getElementById("formEditarAluno")
-.addEventListener("submit",(e)=>{
+.getElementById(
+    "formEditarAluno"
+)
+.addEventListener(
+"submit",
+(e)=>{
 
     e.preventDefault();
 
     const nomeAntigo =
-    alunos[alunoEditando].nome;
+
+    alunos[
+        alunoEditando
+    ].nome;
 
     const novoNome =
-    document.getElementById(
+    document
+    .getElementById(
         "editarNome"
     ).value;
 
     const novaIdade =
-    document.getElementById(
+    document
+    .getElementById(
         "editarIdade"
     ).value;
 
-    alunos[alunoEditando].nome =
+    const novoGmail =
+    document
+    .getElementById(
+        "editarGmail"
+    ).value;
+
+    const novoWhatsapp =
+    document
+    .getElementById(
+        "editarWhatsapp"
+    ).value;
+
+    alunos[
+        alunoEditando
+    ].nome =
+
     novoNome;
 
-    alunos[alunoEditando].idade =
+    alunos[
+        alunoEditando
+    ].idade =
+
     novaIdade;
 
-    pagamentos.forEach(p=>{
+    alunos[
+        alunoEditando
+    ].gmail =
+
+    novoGmail;
+
+    alunos[
+        alunoEditando
+    ].whatsapp =
+
+    novoWhatsapp;
+
+    pagamentos.forEach(
+    pagamento=>{
 
         if(
-            p.aluno === nomeAntigo
+
+            pagamento.aluno ===
+            nomeAntigo
+
         ){
 
-            p.aluno = novoNome;
+            pagamento.aluno =
+            novoNome;
 
         }
+
+    });
+
+    treinos.forEach(
+    treino=>{
+
+        treino.participantes =
+
+        treino.participantes
+        .map(nome=>{
+
+            return nome ===
+            nomeAntigo
+
+            ? novoNome
+            : nome;
+
+        });
 
     });
 
@@ -323,36 +628,91 @@ document
     renderPagamentos();
     renderFrequencia();
 
-    modalEditar.style.display =
-    "none";
-
-    overlay.style.display =
-    "none";
-
-    document.body.classList.remove(
-        "modal-aberto"
-    );
+    fecharModais();
 
 });
 
+// ======================================
+// VERIFICAR PLANOS EXPIRADOS
+// ======================================
+
+function verificarExpirados(){
+
+    const hoje =
+    new Date();
+
+    const alunosAtivos = [];
+
+    alunos.forEach(
+    aluno=>{
+
+        const limite =
+        new Date(
+            aluno.dataCadastro
+        );
+
+        limite.setMonth(
+
+            limite.getMonth() +
+
+            aluno.meses
+
+        );
+
+        if(
+            hoje <= limite
+        ){
+
+            alunosAtivos.push(
+                aluno
+            );
+
+        }
+
+    });
+
+    alunos =
+    alunosAtivos;
+
+    pagamentos =
+    pagamentos.filter(
+    pagamento=>{
+
+        return alunos.some(
+        aluno=>
+
+            aluno.nome ===
+            pagamento.aluno
+
+        );
+
+    });
+
+    salvarDados();
+
+}
 // ======================================
 // CADASTRO DE TREINOS
 // ======================================
 
 document
-.getElementById("formTreino")
-.addEventListener("submit",(e)=>{
+.getElementById("formNovoTreino")
+.addEventListener(
+"submit",
+(e)=>{
 
     e.preventDefault();
 
     const exercicio =
-    document.getElementById(
-        "nomeTreino"
+    document
+    .getElementById(
+        "novoExercicio"
     ).value;
 
     const dia =
-    document.getElementById(
-        "DiaSemana"
+    document
+    .getElementById(
+        "novoDia"
     ).value;
 
     treinos.push({
@@ -371,111 +731,9 @@ document
 
     e.target.reset();
 
+    fecharModais();
+
 });
-
-// ======================================
-// EDITAR TREINO
-// ======================================
-
-function editarTreino(index){
-
-    const novoNome = prompt(
-
-        "Novo nome do treino:",
-
-        treinos[index].exercicio
-
-    );
-
-    if(!novoNome) return;
-
-    treinos[index].exercicio =
-    novoNome;
-
-    salvarDados();
-
-    renderTreinos();
-
-}
-
-// ======================================
-// EXCLUIR TREINO
-// ======================================
-
-function excluirTreino(index){
-
-    const confirmar = confirm(
-        "Deseja excluir este treino?"
-    );
-
-    if(!confirmar) return;
-
-    treinos.splice(index,1);
-
-    salvarDados();
-
-    renderTreinos();
-
-    atualizarRelatorios();
-
-}
-
-// ======================================
-// PARTICIPANTES
-// ======================================
-
-function adicionarParticipante(index){
-
-    let listaAlunos = alunos
-    .map(aluno => aluno.nome)
-    .join("\n");
-
-    const nome = prompt(
-
-        "Digite o nome do aluno:\n\n" +
-        listaAlunos
-
-    );
-
-    if(!nome) return;
-
-    const existe = alunos.some(
-        aluno => aluno.nome === nome
-    );
-
-    if(!existe){
-
-        alert(
-            "Aluno não encontrado!"
-        );
-
-        return;
-
-    }
-
-    if(
-        treinos[index]
-        .participantes
-        .includes(nome)
-    ){
-
-        alert(
-            "Aluno já está neste treino!"
-        );
-
-        return;
-
-    }
-
-    treinos[index]
-    .participantes
-    .push(nome);
-
-    salvarDados();
-
-    renderTreinos();
-
-}
 
 // ======================================
 // LISTAR TREINOS
@@ -549,62 +807,47 @@ function renderTreinos(){
 
         destino.innerHTML += `
 
-        <div class="aluno-card">
+        <div class="Treino-card">
 
             <h3>
                 ${treino.exercicio}
             </h3>
 
             <p>
-                <strong>
                 Participantes:
-                </strong>
+                ${treino.participantes.length}
             </p>
-
-            <ul>
-
-                ${
-                    treino.participantes
-                    .map(nome =>
-
-                        `<li>${nome}</li>`
-
-                    )
-                    .join("")
-                }
-
-            </ul>
 
             <div class="acoes-card">
 
                 <button
-                    class="btn"
-                    onclick="
-                    adicionarParticipante(
-                    ${index}
-                    )">
+                class="btn"
+                onclick="
+                abrirParticipantes(
+                ${index}
+                )">
 
-                    Adicionar Aluno
+                    Participantes
 
                 </button>
 
                 <button
-                    class="btn-editar"
-                    onclick="
-                    editarTreino(
-                    ${index}
-                    )">
+                class="btn-editar"
+                onclick="
+                editarTreino(
+                ${index}
+                )">
 
                     Editar
 
                 </button>
 
                 <button
-                    class="btn-excluir"
-                    onclick="
-                    excluirTreino(
-                    ${index}
-                    )">
+                class="btn-excluir"
+                onclick="
+                excluirTreino(
+                ${index}
+                )">
 
                     Excluir
 
@@ -621,31 +864,250 @@ function renderTreinos(){
 }
 
 // ======================================
+// EDITAR TREINO
+// ======================================
+
+function editarTreino(index){
+
+    const novoNome =
+    prompt(
+        "Novo nome:",
+        treinos[index].exercicio
+    );
+
+    if(!novoNome) return;
+
+    treinos[index].exercicio =
+    novoNome;
+
+    salvarDados();
+
+    renderTreinos();
+
+}
+
+// ======================================
+// EXCLUIR TREINO
+// ======================================
+
+function excluirTreino(index){
+
+    const confirmar =
+    confirm(
+        "Excluir treino?"
+    );
+
+    if(!confirmar) return;
+
+    treinos.splice(
+        index,
+        1
+    );
+
+    salvarDados();
+
+    renderTreinos();
+
+    atualizarRelatorios();
+
+}
+
+// ======================================
+// PARTICIPANTES
+// ======================================
+
+function abrirParticipantes(index){
+
+    treinoSelecionado =
+    index;
+
+    renderParticipantes();
+
+    overlay.style.display =
+    "block";
+
+    modalParticipantes.style.display =
+    "block";
+
+    document.body.classList.add(
+        "modal-aberto"
+    );
+
+}
+
+function renderParticipantes(){
+
+    const lista =
+    document.getElementById(
+        "listaParticipantes"
+    );
+
+    const select =
+    document.getElementById(
+        "alunoParticipante"
+    );
+
+    lista.innerHTML = "";
+    select.innerHTML = "";
+
+    const treino =
+    treinos[
+        treinoSelecionado
+    ];
+
+    treino.participantes.forEach(
+    (nome,posicao)=>{
+
+        lista.innerHTML += `
+
+        <div class="participante-item">
+
+            <span>${nome}</span>
+
+            <button
+            onclick="
+            removerParticipante(
+            ${posicao}
+            )">
+
+                Remover
+
+            </button>
+
+        </div>
+
+        `;
+
+    });
+
+    alunos.forEach(aluno=>{
+
+        if(
+
+            !treino.participantes
+            .includes(
+                aluno.nome
+            )
+
+        ){
+
+            select.innerHTML += `
+
+            <option>
+
+                ${aluno.nome}
+
+            </option>
+
+            `;
+
+        }
+
+    });
+
+}
+
+document
+.getElementById(
+    "btnAdicionarParticipante"
+)
+.addEventListener(
+"click",
+()=>{
+
+    const nome =
+    document
+    .getElementById(
+        "alunoParticipante"
+    ).value;
+
+    if(!nome) return;
+
+    treinos[
+        treinoSelecionado
+    ].participantes.push(
+        nome
+    );
+
+    salvarDados();
+
+    renderParticipantes();
+    renderTreinos();
+
+});
+
+function removerParticipante(posicao){
+
+    treinos[
+        treinoSelecionado
+    ].participantes.splice(
+        posicao,
+        1
+    );
+
+    salvarDados();
+
+    renderParticipantes();
+    renderTreinos();
+
+}
+
+// ======================================
 // PAGAMENTOS
 // ======================================
 
 function marcarPago(index){
 
-    const forma = prompt(
-        "Forma de pagamento:\nPix, Dinheiro ou Cartão"
+    pagamentoSelecionado =
+    index;
+
+    overlay.style.display =
+    "block";
+
+    modalPagamento.style.display =
+    "block";
+
+    document.body.classList.add(
+        "modal-aberto"
     );
 
-    if(!forma) return;
+}
 
-    pagamentos[index].pago = true;
+document
+.getElementById("formPagamento")
+.addEventListener(
+"submit",
+(e)=>{
 
-    pagamentos[index].formaPagamento =
-    forma;
+    e.preventDefault();
+
+    const forma =
+
+    document
+    .getElementById(
+        "formaPagamentoSelect"
+    ).value;
+
+    pagamentos[
+        pagamentoSelecionado
+    ].pago = true;
+
+    pagamentos[
+        pagamentoSelecionado
+    ].formaPagamento = forma;
 
     historico.push({
 
         aluno:
-        pagamentos[index].aluno,
+        pagamentos[
+            pagamentoSelecionado
+        ].aluno,
 
         valor:
-        pagamentos[index].valor,
+        pagamentos[
+            pagamentoSelecionado
+        ].valor,
 
-        forma:
         forma,
 
         data:
@@ -658,16 +1120,36 @@ function marcarPago(index){
 
     renderPagamentos();
 
-    atualizarRelatorios();
+    document
+    .getElementById(
+        "formPagamento"
+    )
+    .reset();
 
-}
+    fecharModais();
+
+});
 
 function renderPagamentos(){
 
-    tabelaPagamentos.innerHTML = "";
+    tabelaPagamentos.innerHTML =
+    "";
 
     pagamentos.forEach(
     (pagamento,index)=>{
+
+        const hoje =
+        new Date();
+
+        const vencimento =
+        new Date(
+            pagamento.vencimento
+        );
+
+        const atrasado =
+
+        hoje > vencimento &&
+        !pagamento.pago;
 
         tabelaPagamentos.innerHTML += `
 
@@ -682,28 +1164,26 @@ function renderPagamentos(){
             </td>
 
             <td>
-                ${
-                    pagamento.vencimento
-                    || "-"
-                }
+                ${vencimento.toLocaleDateString()}
             </td>
 
             <td>
-                ${
-                    pagamento.formaPagamento
-                    || "-"
-                }
+                ${pagamento.formaPagamento}
             </td>
 
             <td
-                class="${
-                    pagamento.pago
-                    ? "pago"
-                    : "pendente"
-                }">
+            class="${
+                atrasado
+                ? "atrasado"
+                : pagamento.pago
+                ? "pago"
+                : "pendente"
+            }">
 
                 ${
-                    pagamento.pago
+                    atrasado
+                    ? "Atrasado"
+                    : pagamento.pago
                     ? "Pago"
                     : "Pendente"
                 }
@@ -717,16 +1197,16 @@ function renderPagamentos(){
 
                     ?
 
-                    `<span>✔</span>`
+                    "✔"
 
                     :
 
                     `<button
-                        class="btn-pago"
-                        onclick="
-                        marcarPago(
-                        ${index}
-                        )">
+                    class="btn-pago"
+                    onclick="
+                    marcarPago(
+                    ${index}
+                    )">
 
                         Confirmar
 
@@ -755,12 +1235,17 @@ function atualizarFinanceiro(){
 
     let pendentes = 0;
 
-    pagamentos.forEach(p=>{
+    pagamentos.forEach(
+    pagamento=>{
 
-        if(p.pago){
+        if(
+            pagamento.pago
+        ){
 
             recebido +=
-            Number(p.valor);
+            Number(
+                pagamento.valor
+            );
 
         }else{
 
@@ -770,14 +1255,18 @@ function atualizarFinanceiro(){
 
     });
 
-    document.getElementById(
+    document
+    .getElementById(
         "valorRecebido"
     ).textContent =
+
     `R$ ${recebido.toFixed(2)}`;
 
-    document.getElementById(
+    document
+    .getElementById(
         "faltamPagar"
     ).textContent =
+
     pendentes;
 
 }
@@ -789,6 +1278,7 @@ function atualizarFinanceiro(){
 function alterarPresenca(index){
 
     alunos[index].presente =
+
     !alunos[index].presente;
 
     salvarDados();
@@ -799,7 +1289,8 @@ function alterarPresenca(index){
 
 function renderFrequencia(){
 
-    tabelaFrequencia.innerHTML = "";
+    tabelaFrequencia.innerHTML =
+    "";
 
     alunos.forEach(
     (aluno,index)=>{
@@ -809,29 +1300,24 @@ function renderFrequencia(){
         <tr>
 
             <td>
-
                 ${aluno.nome}
-
             </td>
 
             <td>
 
                 <input
-                    type="checkbox"
+                type="checkbox"
 
-                    ${
-                        aluno.presente
-                        ? "checked"
-                        : ""
-                    }
+                ${
+                    aluno.presente
+                    ? "checked"
+                    : ""
+                }
 
-                    onchange="
-                    alterarPresenca(
-                    ${index}
-                    )
-                    "
-
-                >
+                onchange="
+                alterarPresenca(
+                ${index}
+                )">
 
             </td>
 
@@ -849,39 +1335,36 @@ function renderFrequencia(){
 
 function atualizarRelatorios(){
 
-    document.getElementById(
+    document
+    .getElementById(
         "totalAlunos"
     ).textContent =
     alunos.length;
 
-    document.getElementById(
+    document
+    .getElementById(
         "totalTreinos"
     ).textContent =
     treinos.length;
 
-    document.getElementById(
+    document
+    .getElementById(
         "totalPagamentos"
     ).textContent =
+
     pagamentos.filter(
         p => p.pago
     ).length;
 
-    document.getElementById(
+    document
+    .getElementById(
         "totalFrequencia"
     ).textContent =
+
     alunos.filter(
-        aluno => aluno.presente
+        aluno =>
+        aluno.presente
     ).length;
-
-}
-
-// ======================================
-// HISTÓRICO FINANCEIRO
-// ======================================
-
-function mostrarHistorico(){
-
-    console.table(historico);
 
 }
 
@@ -917,12 +1400,11 @@ function salvarDados(){
 // INICIALIZAÇÃO
 // ======================================
 
+verificarExpirados();
+
 renderAlunos();
-
 renderTreinos();
-
 renderPagamentos();
-
 renderFrequencia();
 
 atualizarRelatorios();
