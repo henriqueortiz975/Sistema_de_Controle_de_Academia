@@ -1,405 +1,183 @@
-// ======================================
 // DADOS
-// ======================================
+let alunos = JSON.parse(localStorage.getItem("alunos")) || [];
 
-let alunos =
-JSON.parse(
-    localStorage.getItem("alunos")
-) || [];
+let treinos = JSON.parse(localStorage.getItem("treinos")) || [];
 
-let treinos =
-JSON.parse(
-    localStorage.getItem("treinos")
-) || [];
+let pagamentos = JSON.parse(localStorage.getItem("pagamentos")) || [];
 
-let pagamentos =
-JSON.parse(
-    localStorage.getItem("pagamentos")
-) || [];
-
-let historico =
-JSON.parse(
-    localStorage.getItem("historico")
-) || [];
+let historico = JSON.parse(localStorage.getItem("historico")) || [];
 
 let alunoEditando = null;
 let treinoSelecionado = null;
 let pagamentoSelecionado = null;
 
-// ======================================
+
 // ELEMENTOS
-// ======================================
+const btnMostrarForm = document.getElementById("btnMostrarForm");
 
-const btnMostrarForm =
-document.getElementById(
-    "btnMostrarForm"
-);
+const cardFormulario = document.getElementById("cardFormulario");
 
-const cardFormulario =
-document.getElementById(
-    "cardFormulario"
-);
+const overlay = document.getElementById("overlay");
 
-const overlay =
-document.getElementById(
-    "overlay"
-);
+const modalEditar = document.getElementById("modalEditar");
 
-const modalEditar =
-document.getElementById(
-    "modalEditar"
-);
+const modalTreino = document.getElementById("modalTreino");
 
-const modalTreino =
-document.getElementById(
-    "modalTreino"
-);
+const modalParticipantes = document.getElementById("modalParticipantes");
 
-const modalParticipantes =
-document.getElementById(
-    "modalParticipantes"
-);
+const tabelaPagamentos = document.getElementById("tabelaPagamentos");
 
-const tabelaPagamentos =
-document.getElementById(
-    "tabelaPagamentos"
-);
+const tabelaFrequencia = document.getElementById("tabelaFrequencia");
 
-const tabelaFrequencia =
-document.getElementById(
-    "tabelaFrequencia"
-);
-
-const modalPagamento =
-document.getElementById(
-    "modalPagamento"
-);
+const modalPagamento = document.getElementById("modalPagamento");
 
 
-// ======================================
 // NAVEGAÇÃO
-// ======================================
-
 function mostrar(id){
 
-    document
-    .querySelectorAll(".section")
-    .forEach(secao=>{
-
-        secao.classList.remove(
-            "active"
-        );
-
+    document.querySelectorAll(".section").forEach(secao=>{
+        secao.classList.remove("active");
     });
 
-    document
-    .getElementById(id)
-    .classList.add(
-        "active"
-    );
+    document.getElementById(id).classList.add("active");
 
     atualizarRelatorios();
 
 }
 
-// ======================================
-// MODAIS
-// ======================================
 
+// MODAIS
 function fecharModais(){
 
-    cardFormulario.style.display =
-    "none";
+    cardFormulario.style.display = "none";
 
-    modalEditar.style.display =
-    "none";
+    modalEditar.style.display = "none";
 
-    modalTreino.style.display =
-    "none";
+    modalTreino.style.display = "none";
 
-    modalParticipantes.style.display =
-    "none";
+    modalParticipantes.style.display  = "none";
 
-    modalPagamento.style.display =
-"none";
+    modalPagamento.style.display = "none";
 
-    overlay.style.display =
-    "none";
+    overlay.style.display = "none";
 
-    document.body.classList.remove(
-        "modal-aberto"
-    );
+    document.body.classList.remove("modal-aberto");
 
 }
 
-overlay.addEventListener(
-    "click",
-    fecharModais
-);
+overlay.addEventListener("click", fecharModais);
 
-// ======================================
+
 // ABRIR MODAL ALUNO
-// ======================================
+btnMostrarForm.addEventListener("click",()=>{
 
-btnMostrarForm.addEventListener(
-"click",()=>{
+    overlay.style.display = "block";
 
-    overlay.style.display =
-    "block";
+    cardFormulario.style.display = "block";
 
-    cardFormulario.style.display =
-    "block";
-
-    document.body.classList.add(
-        "modal-aberto"
-    );
+    document.body.classList.add("modal-aberto");
 
 });
 
-// ======================================
+
 // ABRIR MODAL TREINO
-// ======================================
+document.getElementById("btnNovoTreino").addEventListener("click", ()=>{
 
-document
-.getElementById(
-    "btnNovoTreino"
-)
-.addEventListener(
-"click",()=>{
+    overlay.style.display = "block";
 
-    overlay.style.display =
-    "block";
+    modalTreino.style.display = "block";
 
-    modalTreino.style.display =
-    "block";
-
-    document.body.classList.add(
-        "modal-aberto"
-    );
+    document.body.classList.add("modal-aberto");
 
 });
 
-// ======================================
-// CADASTRO DE ALUNOS
-// ======================================
 
-document
-.getElementById("formAluno")
-.addEventListener(
-"submit",
-(e)=>{
+// CADASTRO DE ALUNOS
+document.getElementById("formAluno").addEventListener("submit", (e)=>{
 
     e.preventDefault();
 
-    const nome =
-    document.getElementById(
-        "nome"
-    ).value;
+    const nome = document.getElementById("nome").value;
 
-    const idade =
-    document.getElementById(
-        "idade"
-    ).value;
+    const idade = document.getElementById("idade").value;
 
-    const gmail =
-    document.getElementById(
-        "gmail"
-    ).value;
+    const gmail = document.getElementById("gmail").value;
 
-    const whatsapp =
-    document.getElementById(
-        "whatsapp"
-    ).value;
+    const whatsapp = document.getElementById("whatsapp").value;
 
-    const planoSelect =
-    document.getElementById(
-        "tipoValor"
-    );
+    const planoSelect = document.getElementById("tipoValor");
 
-    const valor =
-    Number(
-        planoSelect.value
-    );
+    const valor = Number(planoSelect.value);
 
-    const plano =
-    planoSelect.options[
-        planoSelect.selectedIndex
-    ].text;
+    const plano = planoSelect.options[planoSelect.selectedIndex].text;
 
-    const meses = {
+    const meses = {150:1, 400:3, 750:6, 1500:12}[valor];
 
-        150:1,
-        400:3,
-        750:6,
-        1500:12
+    alunos.push({id: Date.now(), nome, idade, gmail, whatsapp, plano, meses, 
+        dataCadastro: new Date().toISOString(), presente:false});
 
-    }[valor];
+    const vencimento = new Date();
 
-    alunos.push({
+    vencimento.setMonth(vencimento.getMonth() + meses);
 
-        nome,
-        idade,
-        gmail,
-        whatsapp,
-
-        plano,
-        meses,
-
-        dataCadastro:
-        new Date()
-        .toISOString(),
-
-        presente:false
-
-    });
-
-    const vencimento =
-    new Date();
-
-    vencimento.setMonth(
-        vencimento.getMonth() +
-        meses
-    );
-
-    pagamentos.push({
-
-        aluno:nome,
-
-        valor,
-
-        pago:false,
-
-        vencimento:
-        vencimento
-        .toISOString(),
-
-        formaPagamento:
-        "Não definida"
-
-    });
+    pagamentos.push({alunoId: alunos[alunos.length - 1].id, aluno: nome, valor, 
+        pago:false, vencimento: vencimento.toISOString(), formaPagamento: "Não definida"});
 
     salvarDados();
-
     renderAlunos();
     renderPagamentos();
     renderFrequencia();
     atualizarRelatorios();
-
     e.target.reset();
-
     fecharModais();
 
 });
-// ======================================
+
+
 // PESQUISA
-// ======================================
+document.getElementById("pesquisaAluno").addEventListener("keyup", (e)=>{
 
-document
-.getElementById("pesquisaAluno")
-.addEventListener(
-"keyup",
-(e)=>{
-
-    renderAlunos(
-        e.target.value
-    );
+    renderAlunos(e.target.value);
 
 });
 
-// ======================================
+
 // LISTAR ALUNOS
-// ======================================
+function renderAlunos(filtro = ""){
 
-function renderAlunos(
-    filtro = ""
-){
-
-    const lista =
-    document.getElementById(
-        "listaAlunosCards"
-    );
+    const lista = document.getElementById("listaAlunosCards");
 
     lista.innerHTML = "";
 
-    const filtrados =
-    alunos.filter(aluno =>
+    const filtrados = alunos.filter(aluno =>
 
-        aluno.nome
-        .toLowerCase()
-        .includes(
-            filtro.toLowerCase()
-        )
+        aluno.nome.toLowerCase().includes(filtro.toLowerCase())
 
     );
 
     filtrados.forEach(aluno=>{
 
-        const index =
-        alunos.indexOf(
-            aluno
-        );
+        const index = alunos.indexOf(aluno);
 
         lista.innerHTML += `
 
         <div class="aluno-card">
 
-            <h3>
-                ${aluno.nome}
-            </h3>
+            <h3>${aluno.nome}</h3>
 
-            <p>
+            <p><strong>Idade:</strong>${aluno.idade}</p>
 
-                <strong>Idade:</strong>
-                ${aluno.idade}
+            <p><strong>Gmail:</strong>${aluno.gmail}</p>
 
-            </p>
+            <p><strong>WhatsApp:</strong>${aluno.whatsapp}</p>
 
-            <p>
-
-                <strong>Gmail:</strong>
-                ${aluno.gmail}
-
-            </p>
-
-            <p>
-
-                <strong>WhatsApp:</strong>
-                ${aluno.whatsapp}
-
-            </p>
-
-            <p>
-
-                <strong>Plano:</strong>
-                ${aluno.plano}
-
-            </p>
+            <p><strong>Plano:</strong>${aluno.plano}</p>
 
             <div class="acoes-card">
 
-                <button
-                class="btn-editar"
+                <button class="btn-editar" onclick=" editarAluno(${index})">Editar</button>
 
-                onclick="
-                editarAluno(
-                ${index}
-                )">
-
-                    Editar
-
-                </button>
-
-                <button
-                class="btn-excluir"
-
-                onclick="
-                excluirAluno(
-                ${index}
-                )">
-
-                    Excluir
-
-                </button>
+                <button class="btn-excluir" onclick="excluirAluno(${index})">Excluir</button>
 
             </div>
 
@@ -411,278 +189,134 @@ function renderAlunos(
 
 }
 
-// ======================================
+
 // EXCLUIR ALUNO
-// ======================================
+function excluirAluno(index){
 
-function excluirAluno(
-    index
-){
+    const idAluno = alunos[index].id;
 
-    const confirmar =
-    confirm(
+    alunos.splice(index, 1);
 
-        `Deseja excluir ${alunos[index].nome}?`
+    pagamentos = pagamentos.filter(pagamento => pagamento.alunoId !== idAluno);
 
-    );
+    treinos.forEach( treino=>{
 
-    if(!confirmar) return;
-
-    const nome =
-    alunos[index].nome;
-
-    alunos.splice(
-        index,
-        1
-    );
-
-    pagamentos =
-    pagamentos.filter(
-
-        pagamento =>
-
-        pagamento.aluno !==
-        nome
-
-    );
-
-    treinos.forEach(
-    treino=>{
-
-        treino.participantes =
-
-        treino.participantes
-        .filter(
-
-            participante=>
-
-            participante !==
-            nome
-
-        );
+        treino.participantes = treino.participantes.filter(participante => participante !== idAluno);
 
     });
 
     salvarDados();
-
     renderAlunos();
     renderPagamentos();
+    renderTreinos();
     renderFrequencia();
     atualizarRelatorios();
 
 }
 
-// ======================================
+
 // EDITAR ALUNO
-// ======================================
+function editarAluno(index){
 
-function editarAluno(
-    index
-){
+    alunoEditando = index;
 
-    alunoEditando =
-    index;
-
-    document
-    .getElementById(
-        "editarNome"
-    ).value =
+    document.getElementById("editarNome").value =
 
     alunos[index].nome;
 
-    document
-    .getElementById(
-        "editarIdade"
-    ).value =
+    document.getElementById("editarIdade").value = alunos[index].idade;
 
-    alunos[index].idade;
+    document.getElementById("editarGmail").value = alunos[index].gmail;
 
-    document
-    .getElementById(
-        "editarGmail"
-    ).value =
+    document.getElementById("editarWhatsapp").value = alunos[index].whatsapp;
 
-    alunos[index].gmail;
+    overlay.style.display = "block";
 
-    document
-    .getElementById(
-        "editarWhatsapp"
-    ).value =
+    modalEditar.style.display = "block";
 
-    alunos[index].whatsapp;
-
-    overlay.style.display =
-    "block";
-
-    modalEditar.style.display =
-    "block";
-
-    document.body.classList.add(
-        "modal-aberto"
-    );
+    document.body.classList.add("modal-aberto");
 
 }
 
-document
-.getElementById(
-    "formEditarAluno"
-)
-.addEventListener(
-"submit",
-(e)=>{
+document.getElementById("formEditarAluno").addEventListener("submit", (e)=>{
 
     e.preventDefault();
 
-    const nomeAntigo =
+    const nomeAntigo = alunos[alunoEditando].nome;
 
-    alunos[
-        alunoEditando
-    ].nome;
+    const novoNome = document.getElementById("editarNome").value;
 
-    const novoNome =
-    document
-    .getElementById(
-        "editarNome"
-    ).value;
+    const novaIdade = document.getElementById("editarIdade").value;
 
-    const novaIdade =
-    document
-    .getElementById(
-        "editarIdade"
-    ).value;
+    const novoGmail = document.getElementById("editarGmail").value;
 
-    const novoGmail =
-    document
-    .getElementById(
-        "editarGmail"
-    ).value;
+    const novoWhatsapp = document.getElementById("editarWhatsapp").value;
 
-    const novoWhatsapp =
-    document
-    .getElementById(
-        "editarWhatsapp"
-    ).value;
+    alunos[alunoEditando].nome = novoNome;
 
-    alunos[
-        alunoEditando
-    ].nome =
+    alunos[alunoEditando].idade = novaIdade;
 
-    novoNome;
+    alunos[alunoEditando].gmail = novoGmail;
 
-    alunos[
-        alunoEditando
-    ].idade =
+    alunos[alunoEditando].whatsapp = novoWhatsapp;
 
-    novaIdade;
+    pagamentos.forEach(pagamento=>{
 
-    alunos[
-        alunoEditando
-    ].gmail =
+    if(pagamento.alunoId === alunos[alunoEditando].id){
 
-    novoGmail;
+        pagamento.aluno = novoNome;
 
-    alunos[
-        alunoEditando
-    ].whatsapp =
+    }
 
-    novoWhatsapp;
+});
 
-    pagamentos.forEach(
-    pagamento=>{
+    treinos.forEach( treino=>{
 
-        if(
+        treino.participantes = treino.participantes.map(nome=>{
 
-            pagamento.aluno ===
-            nomeAntigo
-
-        ){
-
-            pagamento.aluno =
-            novoNome;
-
-        }
-
-    });
-
-    treinos.forEach(
-    treino=>{
-
-        treino.participantes =
-
-        treino.participantes
-        .map(nome=>{
-
-            return nome ===
-            nomeAntigo
-
-            ? novoNome
-            : nome;
+            return nome === nomeAntigo ? novoNome : nome;
 
         });
 
     });
 
     salvarDados();
-
     renderAlunos();
     renderPagamentos();
     renderFrequencia();
-
     fecharModais();
 
 });
 
-// ======================================
-// VERIFICAR PLANOS EXPIRADOS
-// ======================================
 
+// VERIFICAR PLANOS EXPIRADOS
 function verificarExpirados(){
 
-    const hoje =
-    new Date();
+    const hoje = new Date();
 
     const alunosAtivos = [];
 
-    alunos.forEach(
-    aluno=>{
+    alunos.forEach(aluno=>{
 
-        const limite =
-        new Date(
-            aluno.dataCadastro
-        );
+        const limite = new Date(aluno.dataCadastro);
 
-        limite.setMonth(
+        limite.setMonth(limite.getMonth() + aluno.meses);
 
-            limite.getMonth() +
+        if(hoje <= limite){
 
-            aluno.meses
-
-        );
-
-        if(
-            hoje <= limite
-        ){
-
-            alunosAtivos.push(
-                aluno
-            );
+            alunosAtivos.push(aluno);
 
         }
 
     });
 
-    alunos =
-    alunosAtivos;
+    alunos = alunosAtivos;
 
-    pagamentos =
-    pagamentos.filter(
-    pagamento=>{
+    pagamentos = pagamentos.filter(pagamento=>{
 
-        return alunos.some(
-        aluno=>
+        return alunos.some(aluno=>
 
-            aluno.nome ===
-            pagamento.aluno
+            aluno.nome === pagamento.aluno
 
         );
 
@@ -691,116 +325,60 @@ function verificarExpirados(){
     salvarDados();
 
 }
-// ======================================
-// CADASTRO DE TREINOS
-// ======================================
 
-document
-.getElementById("formNovoTreino")
-.addEventListener(
-"submit",
-(e)=>{
+
+// CADASTRO DE TREINOS
+document.getElementById("formNovoTreino").addEventListener("submit", (e)=>{
 
     e.preventDefault();
 
-    const exercicio =
-    document
-    .getElementById(
-        "novoExercicio"
-    ).value;
+    const exercicio = document.getElementById("novoExercicio").value;
 
-    const dia =
-    document
-    .getElementById(
-        "novoDia"
-    ).value;
+    const dia = document.getElementById("novoDia").value;
 
-    treinos.push({
-
-        exercicio,
-        dia,
-        participantes:[]
-
-    });
+    treinos.push({exercicio, dia, participantes:[]});
 
     salvarDados();
-
     renderTreinos();
-
     atualizarRelatorios();
-
     e.target.reset();
-
     fecharModais();
 
 });
 
-// ======================================
-// LISTAR TREINOS
-// ======================================
 
+// LISTAR TREINOS
 function renderTreinos(){
 
-    document.getElementById(
-        "segunda"
-    ).innerHTML = "";
+    document.getElementById("segunda").innerHTML = "";
 
-    document.getElementById(
-        "terca"
-    ).innerHTML = "";
+    document.getElementById("terca").innerHTML = "";
 
-    document.getElementById(
-        "quarta"
-    ).innerHTML = "";
+    document.getElementById("quarta").innerHTML = "";
 
-    document.getElementById(
-        "quinta"
-    ).innerHTML = "";
+    document.getElementById("quinta").innerHTML = "";
 
-    document.getElementById(
-        "sexta"
-    ).innerHTML = "";
+    document.getElementById("sexta").innerHTML = "";
 
-    treinos.forEach(
-    (treino,index)=>{
+    treinos.forEach((treino,index)=>{
 
         let destino;
 
         switch(treino.dia){
 
-            case "Segunda-feira":
-                destino =
-                document.getElementById(
-                    "segunda"
-                );
+            case "Segunda-feira" : destino = document.getElementById("segunda");
             break;
 
-            case "Terça-feira":
-                destino =
-                document.getElementById(
-                    "terca"
-                );
+            case "Terça-feira" : destino = document.getElementById("terca");
             break;
 
-            case "Quarta-feira":
-                destino =
-                document.getElementById(
-                    "quarta"
-                );
+            case "Quarta-feira" : destino = document.getElementById("quarta");
             break;
 
-            case "Quinta-feira":
-                destino =
-                document.getElementById(
-                    "quinta"
-                );
+            case "Quinta-feira" : destino = document.getElementById("quinta");
             break;
 
-            case "Sexta-feira":
-                destino =
-                document.getElementById(
-                    "sexta"
-                );
+            case "Sexta-feira" : destino = document.getElementById("sexta");
             break;
 
         }
@@ -809,49 +387,17 @@ function renderTreinos(){
 
         <div class="Treino-card">
 
-            <h3>
-                ${treino.exercicio}
-            </h3>
+            <h3>${treino.exercicio}</h3>
 
-            <p>
-                Participantes:
-                ${treino.participantes.length}
-            </p>
+            <p>Participantes:${treino.participantes.length}</p>
 
             <div class="acoes-card">
 
-                <button
-                class="btn"
-                onclick="
-                abrirParticipantes(
-                ${index}
-                )">
+                <button class="btn" onclick="abrirParticipantes(${index})">Participantes</button>
 
-                    Participantes
+                <button class="btn-editar" onclick="editarTreino(${index})">Editar</button>
 
-                </button>
-
-                <button
-                class="btn-editar"
-                onclick="
-                editarTreino(
-                ${index}
-                )">
-
-                    Editar
-
-                </button>
-
-                <button
-                class="btn-excluir"
-                onclick="
-                excluirTreino(
-                ${index}
-                )">
-
-                    Excluir
-
-                </button>
+                <button class="btn-excluir" onclick="excluirTreino(${index})">Excluir</button>
 
             </div>
 
@@ -863,116 +409,77 @@ function renderTreinos(){
 
 }
 
-// ======================================
-// EDITAR TREINO
-// ======================================
 
+// EDITAR TREINO
 function editarTreino(index){
 
-    const novoNome =
-    prompt(
-        "Novo nome:",
-        treinos[index].exercicio
-    );
+    const novoNome = prompt("Novo nome:", treinos[index].exercicio);
 
     if(!novoNome) return;
 
-    treinos[index].exercicio =
-    novoNome;
+    treinos[index].exercicio = novoNome;
 
     salvarDados();
-
     renderTreinos();
 
 }
 
-// ======================================
-// EXCLUIR TREINO
-// ======================================
 
+// EXCLUIR TREINO
 function excluirTreino(index){
 
-    const confirmar =
-    confirm(
-        "Excluir treino?"
-    );
+    const confirmar = confirm("Excluir treino?");
 
     if(!confirmar) return;
 
-    treinos.splice(
-        index,
-        1
-    );
+    treinos.splice(index, 1);
 
     salvarDados();
-
     renderTreinos();
-
     atualizarRelatorios();
 
 }
 
-// ======================================
-// PARTICIPANTES
-// ======================================
 
+// PARTICIPANTES
 function abrirParticipantes(index){
 
-    treinoSelecionado =
-    index;
+    treinoSelecionado = index;
 
     renderParticipantes();
 
-    overlay.style.display =
-    "block";
+    overlay.style.display = "block";
 
-    modalParticipantes.style.display =
-    "block";
+    modalParticipantes.style.display = "block";
 
-    document.body.classList.add(
-        "modal-aberto"
-    );
+    document.body.classList.add("modal-aberto");
 
 }
 
 function renderParticipantes(){
 
-    const lista =
-    document.getElementById(
-        "listaParticipantes"
-    );
+    const lista = document.getElementById("listaParticipantes");
 
-    const select =
-    document.getElementById(
-        "alunoParticipante"
-    );
+    const select = document.getElementById("alunoParticipante");
 
     lista.innerHTML = "";
     select.innerHTML = "";
 
-    const treino =
-    treinos[
-        treinoSelecionado
-    ];
+    const treino = treinos[treinoSelecionado];
 
-    treino.participantes.forEach(
-    (nome,posicao)=>{
+    treino.participantes.forEach((idAluno,posicao)=>{
+
+        const aluno = alunos.find(a => a.id === idAluno);
+
+        if(!aluno) return;
 
         lista.innerHTML += `
 
         <div class="participante-item">
 
-            <span>${nome}</span>
+            <span>${aluno.nome}</span>
 
-            <button
-            onclick="
-            removerParticipante(
-            ${posicao}
-            )">
-
-                Remover
-
-            </button>
+            <button class="btn-excluir" onclick="removerParticipante(${posicao})">Remover</button>
 
         </div>
 
@@ -982,22 +489,11 @@ function renderParticipantes(){
 
     alunos.forEach(aluno=>{
 
-        if(
-
-            !treino.participantes
-            .includes(
-                aluno.nome
-            )
-
-        ){
+        if(!treino.participantes.includes(aluno.id)){
 
             select.innerHTML += `
 
-            <option>
-
-                ${aluno.nome}
-
-            </option>
+            <option value="${aluno.id}">${aluno.nome}</option>
 
             `;
 
@@ -1007,30 +503,13 @@ function renderParticipantes(){
 
 }
 
-document
-.getElementById(
-    "btnAdicionarParticipante"
-)
-.addEventListener(
-"click",
-()=>{
+document.getElementById("btnAdicionarParticipante").addEventListener("click",()=>{
 
-    const nome =
-    document
-    .getElementById(
-        "alunoParticipante"
-    ).value;
+    const idAluno = Number(document.getElementById("alunoParticipante").value);
 
-    if(!nome) return;
-
-    treinos[
-        treinoSelecionado
-    ].participantes.push(
-        nome
-    );
+    treinos[treinoSelecionado].participantes.push(idAluno);
 
     salvarDados();
-
     renderParticipantes();
     renderTreinos();
 
@@ -1038,182 +517,77 @@ document
 
 function removerParticipante(posicao){
 
-    treinos[
-        treinoSelecionado
-    ].participantes.splice(
-        posicao,
-        1
-    );
+    treinos[treinoSelecionado].participantes.splice(posicao, 1);
 
     salvarDados();
-
     renderParticipantes();
     renderTreinos();
 
 }
 
-// ======================================
-// PAGAMENTOS
-// ======================================
 
+// PAGAMENTOS
 function marcarPago(index){
 
-    pagamentoSelecionado =
-    index;
+    pagamentoSelecionado = index;
 
-    overlay.style.display =
-    "block";
+    overlay.style.display = "block";
 
-    modalPagamento.style.display =
-    "block";
+    modalPagamento.style.display = "block";
 
-    document.body.classList.add(
-        "modal-aberto"
-    );
+    document.body.classList.add("modal-aberto");
 
 }
 
-document
-.getElementById("formPagamento")
-.addEventListener(
-"submit",
-(e)=>{
+document.getElementById("formPagamento").addEventListener("submit",(e)=>{
 
     e.preventDefault();
 
-    const forma =
+    const forma = document.getElementById("formaPagamentoSelect").value;
 
-    document
-    .getElementById(
-        "formaPagamentoSelect"
-    ).value;
+    pagamentos[pagamentoSelecionado].pago = true;
 
-    pagamentos[
-        pagamentoSelecionado
-    ].pago = true;
+    pagamentos[pagamentoSelecionado].formaPagamento = forma;
 
-    pagamentos[
-        pagamentoSelecionado
-    ].formaPagamento = forma;
-
-    historico.push({
-
-        aluno:
-        pagamentos[
-            pagamentoSelecionado
-        ].aluno,
-
-        valor:
-        pagamentos[
-            pagamentoSelecionado
-        ].valor,
-
-        forma,
-
-        data:
-        new Date()
-        .toLocaleDateString()
-
-    });
+    historico.push({aluno : pagamentos[pagamentoSelecionado].aluno, 
+        valor : pagamentos[pagamentoSelecionado].valor, forma, data : new Date().toLocaleDateString()});
 
     salvarDados();
-
     renderPagamentos();
-
-    document
-    .getElementById(
-        "formPagamento"
-    )
-    .reset();
-
+    document.getElementById("formPagamento").reset();
     fecharModais();
 
 });
 
 function renderPagamentos(){
 
-    tabelaPagamentos.innerHTML =
-    "";
+    tabelaPagamentos.innerHTML = "";
 
-    pagamentos.forEach(
-    (pagamento,index)=>{
+    pagamentos.forEach((pagamento,index)=>{
 
-        const hoje =
-        new Date();
+        const hoje = new Date();
 
-        const vencimento =
-        new Date(
-            pagamento.vencimento
-        );
+        const vencimento = new Date(pagamento.vencimento);
 
-        const atrasado =
-
-        hoje > vencimento &&
-        !pagamento.pago;
+        const atrasado = hoje > vencimento && !pagamento.pago;
 
         tabelaPagamentos.innerHTML += `
 
         <tr>
 
-            <td>
-                ${pagamento.aluno}
-            </td>
+            <td>${pagamento.aluno}</td>
 
-            <td>
-                R$ ${pagamento.valor}
-            </td>
+            <td>R$ ${pagamento.valor}</td>
 
-            <td>
-                ${vencimento.toLocaleDateString()}
-            </td>
+            <td>${vencimento.toLocaleDateString()}</td>
 
-            <td>
-                ${pagamento.formaPagamento}
-            </td>
+            <td>${pagamento.formaPagamento}</td>
 
-            <td
-            class="${
-                atrasado
-                ? "atrasado"
-                : pagamento.pago
-                ? "pago"
-                : "pendente"
-            }">
+            <td class="${atrasado ? "atrasado" : pagamento.pago ? "pago" : "pendente"}">
+            ${atrasado ? "Atrasado" : pagamento.pago ? "Pago" : "Pendente"}</td>
 
-                ${
-                    atrasado
-                    ? "Atrasado"
-                    : pagamento.pago
-                    ? "Pago"
-                    : "Pendente"
-                }
-
-            </td>
-
-            <td>
-
-                ${
-                    pagamento.pago
-
-                    ?
-
-                    "✔"
-
-                    :
-
-                    `<button
-                    class="btn-pago"
-                    onclick="
-                    marcarPago(
-                    ${index}
-                    )">
-
-                        Confirmar
-
-                    </button>`
-                }
-
-            </td>
+            <td>${pagamento.pago ? "✔" : `<button class="btn-pago" onclick=" marcarPago(${index})">
+            Confirmar</button>`}</td>
 
         </tr>
 
@@ -1225,101 +599,54 @@ function renderPagamentos(){
 
 }
 
-// ======================================
-// FINANCEIRO
-// ======================================
 
+// FINANCEIRO
 function atualizarFinanceiro(){
 
     let recebido = 0;
 
     let pendentes = 0;
 
-    pagamentos.forEach(
-    pagamento=>{
+    pagamentos.forEach(pagamento=>{
 
-        if(
-            pagamento.pago
-        ){
-
-            recebido +=
-            Number(
-                pagamento.valor
-            );
-
+        if(pagamento.pago){
+            recebido += Number(pagamento.valor);
         }else{
-
             pendentes++;
-
         }
 
     });
 
-    document
-    .getElementById(
-        "valorRecebido"
-    ).textContent =
+    document.getElementById("valorRecebido").textContent = `R$ ${recebido.toFixed(2)}`;
 
-    `R$ ${recebido.toFixed(2)}`;
-
-    document
-    .getElementById(
-        "faltamPagar"
-    ).textContent =
-
-    pendentes;
+    document.getElementById("faltamPagar").textContent = pendentes;
 
 }
 
-// ======================================
-// FREQUÊNCIA
-// ======================================
 
+// FREQUÊNCIA
 function alterarPresenca(index){
 
-    alunos[index].presente =
-
-    !alunos[index].presente;
+    alunos[index].presente = !alunos[index].presente;
 
     salvarDados();
-
     atualizarRelatorios();
 
 }
 
 function renderFrequencia(){
 
-    tabelaFrequencia.innerHTML =
-    "";
+    tabelaFrequencia.innerHTML = "";
 
-    alunos.forEach(
-    (aluno,index)=>{
+    alunos.forEach((aluno,index)=>{
 
         tabelaFrequencia.innerHTML += `
 
         <tr>
 
-            <td>
-                ${aluno.nome}
-            </td>
+            <td>${aluno.nome}</td>
 
-            <td>
-
-                <input
-                type="checkbox"
-
-                ${
-                    aluno.presente
-                    ? "checked"
-                    : ""
-                }
-
-                onchange="
-                alterarPresenca(
-                ${index}
-                )">
-
-            </td>
+            <td><input type="checkbox" ${aluno.presente ? "checked" : ""} onchange="alterarPresenca(${index})"></td>
 
         </tr>
 
@@ -1329,82 +656,39 @@ function renderFrequencia(){
 
 }
 
-// ======================================
-// RELATÓRIOS
-// ======================================
 
+// RELATÓRIOS
 function atualizarRelatorios(){
 
-    document
-    .getElementById(
-        "totalAlunos"
-    ).textContent =
-    alunos.length;
+    document.getElementById("totalAlunos").textContent = alunos.length;
 
-    document
-    .getElementById(
-        "totalTreinos"
-    ).textContent =
-    treinos.length;
+    document.getElementById("totalTreinos").textContent = treinos.length;
 
-    document
-    .getElementById(
-        "totalPagamentos"
-    ).textContent =
+    document.getElementById("totalPagamentos").textContent = pagamentos.filter(p => p.pago).length;
 
-    pagamentos.filter(
-        p => p.pago
-    ).length;
-
-    document
-    .getElementById(
-        "totalFrequencia"
-    ).textContent =
-
-    alunos.filter(
-        aluno =>
-        aluno.presente
-    ).length;
+    document.getElementById("totalFrequencia").textContent = alunos.filter(aluno => aluno.presente).length;
 
 }
 
-// ======================================
-// LOCAL STORAGE
-// ======================================
 
+// LOCAL STORAGE
 function salvarDados(){
 
-    localStorage.setItem(
-        "alunos",
-        JSON.stringify(alunos)
-    );
+    localStorage.setItem("alunos", JSON.stringify(alunos));
 
-    localStorage.setItem(
-        "treinos",
-        JSON.stringify(treinos)
-    );
+    localStorage.setItem("treinos", JSON.stringify(treinos));
 
-    localStorage.setItem(
-        "pagamentos",
-        JSON.stringify(pagamentos)
-    );
+    localStorage.setItem("pagamentos", JSON.stringify(pagamentos));
 
-    localStorage.setItem(
-        "historico",
-        JSON.stringify(historico)
-    );
+    localStorage.setItem("historico", JSON.stringify(historico));
 
 }
 
-// ======================================
+
 // INICIALIZAÇÃO
-// ======================================
-
 verificarExpirados();
-
 renderAlunos();
 renderTreinos();
 renderPagamentos();
 renderFrequencia();
-
 atualizarRelatorios();

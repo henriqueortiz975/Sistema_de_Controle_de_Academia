@@ -247,6 +247,22 @@ tr{
     background:#b91c1c;
 }
 
+.participante-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px;
+    margin-bottom:10px;
+    background:#222;
+    border-radius:8px;
+}
+
+.participante-item span{
+    color:rgb(0, 0, 0);
+    font-weight:bold;
+    font-size:1rem;
+}
+
 .btn-editar{
     background:#2563eb;
     color:white;
@@ -254,6 +270,12 @@ tr{
     padding:8px 12px;
     border-radius:6px;
     cursor:pointer;
+}
+
+#alunoParticipante{
+    width: 340px;
+    padding: 12px;
+    font-size: 16px;
 }
 
 .btn-editar:hover{
@@ -273,7 +295,7 @@ tr{
     align-items:center;
     padding:10px;
     margin-bottom:10px;
-    background:#222;
+    background:#ceb029;
     border-radius:8px;
 }
 
@@ -336,6 +358,15 @@ input[type="checkbox"]{
     text-align:center;
 }
 
+body.modal-aberto .container{
+    pointer-events:none;
+    user-select:none;
+}
+
+body.modal-aberto .modal, body.modal-aberto .overlay{
+    pointer-events:auto;
+}
+
 @keyframes modalEntrada{
 
     from{
@@ -350,16 +381,7 @@ input[type="checkbox"]{
 
 }
 
-body.modal-aberto .container{
-    pointer-events:none;
-    user-select:none;
-}
-
-body.modal-aberto .modal, body.modal-aberto .overlay{
-    pointer-events:auto;
-}
-
-@media(max-width:900px){
+@media screen and (max-width:900px){
 
     .container{
         flex-direction:column;
@@ -367,6 +389,17 @@ body.modal-aberto .modal, body.modal-aberto .overlay{
 
     .Esquerda{
         width:100%;
+        padding:20px;
+    }
+
+    .Esquerda h1{
+        margin-bottom:20px;
+    }
+
+    .Esquerda ul{
+        display:grid;
+        grid-template-columns:repeat(2,1fr);
+        gap:10px;
     }
 
     .content{
@@ -377,16 +410,156 @@ body.modal-aberto .modal, body.modal-aberto .overlay{
         flex-direction:column;
     }
 
+    .stat{
+        min-width:100%;
+    }
+
     .topo-alunos{
         flex-direction:column;
     }
 
-    table{
-        font-size:.9rem;
+    .card-topo{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .acoes-card{
+        flex-wrap:wrap;
+    }
+
+    .acoes-card button{
+        flex:1;
     }
 
     .modal{
         width:95%;
     }
 
+}
+
+@media screen and (max-width:600px){
+
+    body{
+        background-attachment:scroll;
+    }
+
+    .content{
+        padding:10px;
+    }
+
+    .Esquerda{
+        padding:15px;
+    }
+
+    .Esquerda h1{
+        font-size:1.3rem;
+    }
+
+    .Esquerda ul{
+        grid-template-columns:1fr;
+    }
+
+    .Esquerda button{
+        padding:12px;
+        font-size:.95rem;
+    }
+
+    h2{
+        font-size:1.3rem;
+    }
+
+    .card{
+        padding:15px;
+    }
+
+    .aluno-card, .Treino-card{
+        padding:15px;
+    }
+
+    .acoes-card{
+        flex-direction:column;
+    }
+
+    .acoes-card button{
+        width:100%;
+    }
+
+    .participante-item{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .participante-item button{
+        width:100%;
+    }
+
+    .modal{
+        width:95%;
+        padding:20px;
+        max-height:90vh;
+        overflow-y:auto;
+    }
+
+    input, select, .btn, .btn-editar, .btn-excluir, .btn-pago{
+        width:100%;
+    }
+
+    table{
+        font-size:.85rem;
+    }
+
+    img{
+        width:120px;
+        height:120px;
+        object-fit:cover;
+    }
+
+}
+
+@media screen and (max-width:400px){
+
+    .Esquerda h1{
+        font-size:1.1rem;
+    }
+
+    .card{
+        padding:12px;
+    }
+
+    .modal{
+        padding:15px;
+    }
+
+    .stat h3{
+        font-size:1.5rem;
+    }
+
+    table{
+        font-size:.75rem;
+    }
+
+}
+
+#listaAlunosCards{
+    width:100%;
+}
+
+#pesquisaAluno{
+    width:100%;
+}
+
+#alunoParticipante{
+    width:100%;
+}
+
+.card, .aluno-card, .Treino-card, .modal{
+    overflow-wrap:break-word;
+}
+
+button{
+    transition:.3s;
+}
+
+button:active{
+    transform:scale(.98);
 }
