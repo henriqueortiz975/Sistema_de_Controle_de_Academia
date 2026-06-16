@@ -684,32 +684,6 @@ function salvarDados(){
 
 }
 
-<<<<<<< HEAD
-const menuToggle = document.getElementById("menuToggle");
-const menuLateral = document.querySelector(".Esquerda");
-const menuOverlay = document.getElementById("menuOverlay");
-
-menuToggle.addEventListener("click", () => {
-    menuLateral.classList.toggle("ativo");
-    menuOverlay.classList.toggle("ativo");
-});
-
-menuOverlay.addEventListener("click", () => {
-    menuLateral.classList.remove("ativo");
-    menuOverlay.classList.remove("ativo");
-});
-
-document.querySelectorAll(".Esquerda button").forEach(btn => {
-    btn.addEventListener("click", () => {
-        if(window.innerWidth <= 900){
-            menuLateral.classList.remove("ativo");
-            menuOverlay.classList.remove("ativo");
-        }
-    });
-});
-
-=======
->>>>>>> b97165099b3ce6af6c6f29805420507ec9b49945
 
 // INICIALIZAÇÃO
 verificarExpirados();

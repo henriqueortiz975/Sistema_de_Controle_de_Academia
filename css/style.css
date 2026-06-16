@@ -273,12 +273,8 @@ tr{
 }
 
 #alunoParticipante{
-<<<<<<< HEAD
     width:100%;
     max-width:340px;
-=======
-    width: 340px;
->>>>>>> b97165099b3ce6af6c6f29805420507ec9b49945
     padding: 12px;
     font-size: 16px;
 }
@@ -567,7 +563,6 @@ button{
 
 button:active{
     transform:scale(.98);
-<<<<<<< HEAD
 }
 
 /* RESPONSIVIDADE UNIVERSAL */
@@ -749,6 +744,4 @@ button,
     .menu-overlay.ativo{
         display:block;
     }
-=======
->>>>>>> b97165099b3ce6af6c6f29805420507ec9b49945
 }
