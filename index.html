@@ -6,7 +6,9 @@
     <title>Sistema de Controle de Academia</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
+    <button id="menuToggle" class="menu-toggle">☰</button>
 
     <div id="overlay" class="overlay"></div>
 
@@ -17,21 +19,43 @@
             <h1>Sistema de Controle de Academia</h1>
 
             <nav>
+
                 <ul>
-                    <li><button onclick="mostrar('home')">🏠 Home</button></li>
-                    <li><button onclick="mostrar('alunos')">👨‍🎓 Cadastro de Alunos</button></li>
-                    <li><button onclick="mostrar('treinos')">💪 Cadastro de Treinos</button></li>
-                    <li><button onclick="mostrar('pagamentos')">💸 Controle de Pagamentos</button></li>
-                    <li><button onclick="mostrar('frequencia')">🏋️ Controle de Frequência</button></li>
-                    <li><button onclick="mostrar('relatorios')">📊 Relatórios</button></li>
+
+                    <li>
+                        <button onclick="mostrar('home')">🏠 Home</button>
+                    </li>
+
+                    <li>
+                        <button onclick="mostrar('alunos')">👨‍🎓 Cadastro de Alunos</button>
+                    </li>
+
+                    <li>
+                        <button onclick="mostrar('treinos')">💪 Cadastro de Treinos</button>
+                    </li>
+
+                    <li>
+                        <button onclick="mostrar('pagamentos')">💸 Controle de Pagamentos</button>
+                    </li>
+
+                    <li>
+                        <button onclick="mostrar('frequencia')">🏋️ Controle de Frequência</button>
+                    </li>
+
+                    <li>
+                        <button onclick="mostrar('relatorios')">📊 Relatórios</button>
+                    </li>
+
                 </ul>
+
             </nav>
-            
-            <img src="aca.png" width="250" >
+
+            <img src="img/aca.png" width="250">
 
         </aside>
 
         <main class="content">
+
 
             <!-- HOME -->
             <section id="home" class="section active">
@@ -46,16 +70,18 @@
 
                 <div class="card">
 
-                    <h2>Criado por</h2>
+                    <h2>Criadores</h2>
 
                     <table class="tabelaresumo">
 
                         <thead>
+
                             <tr>
                                 <th>Pessoa</th>
                                 <th>Github</th>
                                 <th>Gmail</th>
                             </tr>
+
                         </thead>
 
                         <tbody>
@@ -80,6 +106,7 @@
 
             </section>
 
+
             <!-- ALUNOS -->
             <section id="alunos" class="section">
 
@@ -99,62 +126,58 @@
 
             </section>
 
+
             <!-- TREINOS -->
             <section id="treinos" class="section">
 
-                <div class="card">
-
-                    <h2>Cadastro de Treinos</h2>
-
-                    <form id="formTreino">
-
-                        <input type="text" id="nomeTreino" placeholder="Nome do Exercício" required>
-
-                        <select id="DiaSemana" required>
-
-                            <option>Segunda-feira</option>
-                            <option>Terça-feira</option>
-                            <option>Quarta-feira</option>
-                            <option>Quinta-feira</option>
-                            <option>Sexta-feira</option>
-
-                        </select>
-
-                        <button class="btn">Salvar Treino</button>
-
-                    </form>
-
-                </div>
+                <button id="btnNovoTreino" class="btn NovoTreino">+ Novo Treino</button>
 
                 <div class="Semana">
 
                     <div class="card">
+
                         <h2>Segunda-feira</h2>
+
                         <div id="segunda"></div>
+
                     </div>
 
                     <div class="card">
+
                         <h2>Terça-feira</h2>
+
                         <div id="terca"></div>
+
                     </div>
 
                     <div class="card">
+
                         <h2>Quarta-feira</h2>
+
                         <div id="quarta"></div>
+
                     </div>
 
                     <div class="card">
+
                         <h2>Quinta-feira</h2>
+
                         <div id="quinta"></div>
+
                     </div>
 
                     <div class="card">
+
                         <h2>Sexta-feira</h2>
+
                         <div id="sexta"></div>
+
                     </div>
+
                 </div>
 
             </section>
+
 
             <!-- PAGAMENTOS -->
             <section id="pagamentos" class="section">
@@ -162,13 +185,19 @@
                 <div class="stats">
 
                     <div class="stat">
+
                         <h3 id="valorRecebido">R$ 0</h3>
+
                         <p>Valor Recebido</p>
+
                     </div>
 
                     <div class="stat">
+
                         <h3 id="faltamPagar">0</h3>
+
                         <p>Faltam Pagar</p>
+
                     </div>
 
                 </div>
@@ -182,12 +211,14 @@
                         <thead>
 
                             <tr>
+
                                 <th>Nome</th>
                                 <th>Valor</th>
+                                <th>Vencimento</th>
+                                <th>Forma de Pagamento</th>
                                 <th>Status</th>
                                 <th>Ações</th>
-                                <th>Vencimento</th>
-                                <th>Forma</th>
+
                             </tr>
 
                         </thead>
@@ -199,6 +230,7 @@
                 </div>
 
             </section>
+            
 
             <!-- FREQUÊNCIA -->
             <section id="frequencia" class="section">
@@ -212,8 +244,10 @@
                         <thead>
 
                             <tr>
+
                                 <th>Nome</th>
                                 <th>Veio Hoje</th>
+
                             </tr>
 
                         </thead>
@@ -226,6 +260,7 @@
 
             </section>
 
+
             <!-- RELATÓRIOS -->
             <section id="relatorios" class="section">
 
@@ -236,23 +271,35 @@
                     <div class="stats">
 
                         <div class="stat">
+
                             <h3 id="totalAlunos">0</h3>
+
                             <p>Alunos</p>
+
                         </div>
 
                         <div class="stat">
+
                             <h3 id="totalTreinos">0</h3>
+
                             <p>Treinos</p>
+
                         </div>
 
                         <div class="stat">
+
                             <h3 id="totalPagamentos">0</h3>
-                            <p>Pagamentos</p>
+
+                            <p>Pagamentos Recebidos</p>
+
                         </div>
 
                         <div class="stat">
+
                             <h3 id="totalFrequencia">0</h3>
+
                             <p>Presenças Hoje</p>
+
                         </div>
 
                     </div>
@@ -265,16 +312,21 @@
 
     </div>
 
-    <!-- Modal Cadastro -->
+
+    <!-- MODAL CADASTRO ALUNO -->
     <div id="cardFormulario" class="modal">
 
-        <h2>Cadastro de Alunos</h2>
+        <h2>Cadastro de Aluno</h2>
 
         <form id="formAluno">
 
-            <input type="text" id="nome" placeholder="Nome completo" required>
+            <input type="text" id="nome" placeholder="Nome Completo" required>
 
-            <input type="number" id="idade" min="1" max="150" placeholder="Idade" required>
+            <input type="number" id="idade" placeholder="Idade" required>
+
+            <input type="email" id="gmail" placeholder="Gmail" required>
+
+            <input type="text" id="whatsapp" placeholder="WhatsApp" required>
 
             <select id="tipoValor" required>
 
@@ -291,7 +343,8 @@
 
     </div>
 
-    <!-- Modal Editar -->
+
+    <!-- MODAL EDITAR ALUNO -->
     <div id="modalEditar" class="modal">
 
         <h2>Editar Aluno</h2>
@@ -302,7 +355,80 @@
 
             <input type="number" id="editarIdade" required>
 
+            <input type="email" id="editarGmail">
+
+            <input type="text" id="editarWhatsapp">
+
             <button type="submit" class="btn">Salvar Alterações</button>
+
+        </form>
+
+    </div>
+
+
+    <!-- MODAL NOVO TREINO -->
+    <div id="modalTreino" class="modal">
+
+        <h2>Novo Treino</h2>
+
+        <form id="formNovoTreino">
+
+            <input type="text" id="novoExercicio" placeholder="Nome do Exercício" required>
+
+            <select id="novoDia">
+
+                <option>Segunda-feira</option>
+                <option>Terça-feira</option>
+                <option>Quarta-feira</option>
+                <option>Quinta-feira</option>
+                <option>Sexta-feira</option>
+
+            </select>
+
+            <button class="btn">Salvar Treino</button>
+
+        </form>
+
+    </div>
+
+
+    <!-- MODAL PARTICIPANTES -->
+    <div id="modalParticipantes" class="modal">
+
+        <h2>Participantes do Treino</h2>
+
+        <div id="listaParticipantes"></div>
+
+        <hr style="margin:20px 0;">
+
+        <h3 style="color:#ceb029;margin-bottom:15px;">Adicionar Aluno</h3>
+
+        <select id="alunoParticipante"></select>
+
+        <button id="btnAdicionarParticipante" class="btn" style="margin-top:15px;">Adicionar</button>
+
+    </div>
+
+
+    <!-- MODAL PAGAMENTO -->
+    <div id="modalPagamento" class="modal">
+
+        <h2>Confirmar Pagamento</h2>
+
+        <form id="formPagamento">
+
+            <select id="formaPagamentoSelect" required>
+
+                <option value="">Selecione a forma de pagamento</option>
+
+                <option value="Dinheiro Físico">Dinheiro Físico</option>
+                <option value="Pix">Pix</option>
+                <option value="Crédito">Crédito</option>
+                <option value="Débito">Débito</option>
+
+            </select>
+
+            <button class="btn">Confirmar Pagamento</button>
 
         </form>
 
@@ -310,5 +436,8 @@
 
     <script src="js/script.js"></script>
 
+    <div id="menuOverlay" class="menu-overlay"></div>
+
 </body>
+
 </html>

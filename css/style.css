@@ -86,6 +86,7 @@ body{
     border-radius:12px;
     box-shadow:0 4px 10px rgba(0,0,0,.15);
     margin-bottom:30px;
+    border:1px solid #ceb029;
 }
 
 .card-topo{
@@ -152,7 +153,7 @@ th{
 }
 
 th, td{
-    border:1px solid #ceb029;
+    border:1px solid #ffffff;
     padding:12px;
     text-align:center;
 }
@@ -199,7 +200,7 @@ tr{
     gap:20px;
 }
 
-.aluno-card{
+.aluno-card, .Treino-card{
     background:#000;
     border-radius:12px;
     border:1px solid #ceb029;
@@ -209,7 +210,7 @@ tr{
     margin-bottom:20px;
 }
 
-.aluno-card:hover{
+.aluno-card:hover, .Treino-card:hover{
     transform:translateY(-5px);
 }
 
@@ -217,11 +218,12 @@ tr{
     background:#222;
     padding:10px;
     border-radius:6px;
+    border:1px solid #ceb029;
     margin-bottom:10px;
     font-size:.9rem;
 }
 
-.aluno-card h3{
+.aluno-card h3, .Treino-card h3{
     color:#ceb029;
     margin-bottom:10px;
 }
@@ -245,6 +247,22 @@ tr{
     background:#b91c1c;
 }
 
+.participante-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px;
+    margin-bottom:10px;
+    background:#222;
+    border-radius:8px;
+}
+
+.participante-item span{
+    color:rgb(0, 0, 0);
+    font-weight:bold;
+    font-size:1rem;
+}
+
 .btn-editar{
     background:#2563eb;
     color:white;
@@ -254,8 +272,32 @@ tr{
     cursor:pointer;
 }
 
+#alunoParticipante{
+    width:100%;
+    max-width:340px;
+    padding: 12px;
+    font-size: 16px;
+}
+
 .btn-editar:hover{
     background:#1d4ed8;
+}
+
+.atrasado{
+    color:#ff0000;
+    font-weight:bold;
+}
+.NovoTreino{
+    margin-bottom:15px;
+}
+.participante-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px;
+    margin-bottom:10px;
+    background:#ceb029;
+    border-radius:8px;
 }
 
 .btn-pago{
@@ -317,6 +359,15 @@ input[type="checkbox"]{
     text-align:center;
 }
 
+body.modal-aberto .container{
+    pointer-events:none;
+    user-select:none;
+}
+
+body.modal-aberto .modal, body.modal-aberto .overlay{
+    pointer-events:auto;
+}
+
 @keyframes modalEntrada{
 
     from{
@@ -331,16 +382,7 @@ input[type="checkbox"]{
 
 }
 
-body.modal-aberto .container{
-    pointer-events:none;
-    user-select:none;
-}
-
-body.modal-aberto .modal, body.modal-aberto .overlay{
-    pointer-events:auto;
-}
-
-@media(max-width:900px){
+@media screen and (max-width:900px){
 
     .container{
         flex-direction:column;
@@ -348,6 +390,17 @@ body.modal-aberto .modal, body.modal-aberto .overlay{
 
     .Esquerda{
         width:100%;
+        padding:20px;
+    }
+
+    .Esquerda h1{
+        margin-bottom:20px;
+    }
+
+    .Esquerda ul{
+        display:grid;
+        grid-template-columns:repeat(2,1fr);
+        gap:10px;
     }
 
     .content{
@@ -358,16 +411,337 @@ body.modal-aberto .modal, body.modal-aberto .overlay{
         flex-direction:column;
     }
 
+    .stat{
+        min-width:100%;
+    }
+
     .topo-alunos{
         flex-direction:column;
     }
 
-    table{
-        font-size:.9rem;
+    .card-topo{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .acoes-card{
+        flex-wrap:wrap;
+    }
+
+    .acoes-card button{
+        flex:1;
     }
 
     .modal{
         width:95%;
     }
 
+}
+
+@media screen and (max-width:600px){
+
+    body{
+        background-attachment:scroll;
+    }
+
+    .content{
+        padding:10px;
+    }
+
+    .Esquerda{
+        padding:15px;
+    }
+
+    .Esquerda h1{
+        font-size:1.3rem;
+    }
+
+    .Esquerda ul{
+        grid-template-columns:1fr;
+    }
+
+    .Esquerda button{
+        padding:12px;
+        font-size:.95rem;
+    }
+
+    h2{
+        font-size:1.3rem;
+    }
+
+    .card{
+        padding:15px;
+    }
+
+    .aluno-card, .Treino-card{
+        padding:15px;
+    }
+
+    .acoes-card{
+        flex-direction:column;
+    }
+
+    .acoes-card button{
+        width:100%;
+    }
+
+    .participante-item{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .participante-item button{
+        width:100%;
+    }
+
+    .modal{
+        width:95%;
+        padding:20px;
+        max-height:90vh;
+        overflow-y:auto;
+    }
+
+    input, select, .btn, .btn-editar, .btn-excluir, .btn-pago{
+        width:100%;
+    }
+
+    table{
+        font-size:.85rem;
+    }
+
+    img{
+        width:120px;
+        height:120px;
+        object-fit:cover;
+    }
+
+}
+
+@media screen and (max-width:400px){
+
+    .Esquerda h1{
+        font-size:1.1rem;
+    }
+
+    .card{
+        padding:12px;
+    }
+
+    .modal{
+        padding:15px;
+    }
+
+    .stat h3{
+        font-size:1.5rem;
+    }
+
+    table{
+        font-size:.75rem;
+    }
+
+}
+
+#listaAlunosCards{
+    width:100%;
+}
+
+#pesquisaAluno{
+    width:100%;
+}
+
+#alunoParticipante{
+    width:100%;
+}
+
+.card, .aluno-card, .Treino-card, .modal{
+    overflow-wrap:break-word;
+}
+
+button{
+    transition:.3s;
+}
+
+button:active{
+    transform:scale(.98);
+}
+
+/* RESPONSIVIDADE UNIVERSAL */
+
+html{
+    font-size:16px;
+}
+
+.container{
+    width:100%;
+    overflow-x:hidden;
+}
+
+.content{
+    width:100%;
+    overflow-x:hidden;
+}
+
+img{
+    max-width:100%;
+    height:auto;
+}
+
+table{
+    display:block;
+    overflow-x:auto;
+    white-space:nowrap;
+}
+
+input,
+select,
+button,
+.btn,
+.btn-editar,
+.btn-excluir,
+.btn-pago{
+    max-width:100%;
+}
+
+.modal{
+    width:min(95%, 600px);
+}
+
+.card,
+.aluno-card,
+.Treino-card,
+.stat{
+    width:100%;
+}
+
+.topo-alunos{
+    flex-wrap:wrap;
+}
+
+.acoes-card{
+    flex-wrap:wrap;
+}
+
+.acoes-card button{
+    flex:1 1 150px;
+}
+
+@media (max-width:768px){
+
+    .container{
+        flex-direction:column;
+    }
+
+    .Esquerda{
+        width:100%;
+    }
+
+    .stats{
+        flex-direction:column;
+    }
+
+    .topo-alunos{
+        flex-direction:column;
+    }
+
+    .card-topo{
+        flex-direction:column;
+        gap:10px;
+    }
+
+}
+
+@media (max-width:480px){
+
+    html{
+        font-size:14px;
+    }
+
+    .content{
+        padding:10px;
+    }
+
+    .card{
+        padding:15px;
+    }
+
+    .modal{
+        padding:15px;
+        max-height:90vh;
+        overflow-y:auto;
+    }
+
+    th,
+    td{
+        padding:8px;
+    }
+
+}
+
+@media (min-width:1920px){
+
+    .content{
+        max-width:1800px;
+        margin:auto;
+    }
+
+    .card{
+        padding:35px;
+    }
+
+}
+
+.menu-toggle{
+    display:none;
+    position:fixed;
+    top:15px;
+    left:15px;
+    z-index:2000;
+    background:#ceb029;
+    color:#000;
+    border:none;
+    padding:12px 15px;
+    border-radius:8px;
+    font-size:1.4rem;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+@media (max-width:900px){
+
+    .menu-toggle{
+        display:block;
+    }
+
+    .Esquerda{
+        position:fixed;
+        top:0;
+        left:-100%;
+        width:280px;
+        height:100vh;
+        z-index:1500;
+        transition:.3s;
+        overflow-y:auto;
+    }
+
+    .Esquerda.ativo{
+        left:0;
+    }
+
+    .content{
+        width:100%;
+        margin-left:0;
+        padding-top:70px;
+    }
+
+    .menu-overlay{
+        position:fixed;
+        inset:0;
+        background:rgba(0,0,0,.5);
+        z-index:1400;
+        display:none;
+    }
+
+    .menu-overlay.ativo{
+        display:block;
+    }
 }
