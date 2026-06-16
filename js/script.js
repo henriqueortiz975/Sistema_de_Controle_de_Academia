@@ -684,6 +684,7 @@ function salvarDados(){
 
 }
 
+<<<<<<< HEAD
 const menuToggle = document.getElementById("menuToggle");
 const menuLateral = document.querySelector(".Esquerda");
 const menuOverlay = document.getElementById("menuOverlay");
@@ -707,6 +708,8 @@ document.querySelectorAll(".Esquerda button").forEach(btn => {
     });
 });
 
+=======
+>>>>>>> b97165099b3ce6af6c6f29805420507ec9b49945
 
 // INICIALIZAÇÃO
 verificarExpirados();
