@@ -684,6 +684,46 @@ function salvarDados(){
 
 }
 
+// MENU HAMBURGUER
+const menuToggle = document.getElementById("menuToggle");
+const menuLateral = document.querySelector(".Esquerda");
+const menuOverlay = document.getElementById("menuOverlay");
+
+menuToggle.addEventListener("click",()=>{
+
+    menuLateral.classList.toggle("ativo");
+
+    if(menuLateral.classList.contains("ativo")){
+        menuOverlay.style.display="block";
+    }else{
+        menuOverlay.style.display="none";
+    }
+
+});
+
+menuOverlay.addEventListener("click",()=>{
+
+    menuLateral.classList.remove("ativo");
+    menuOverlay.style.display="none";
+
+});
+
+document.querySelectorAll(".Esquerda button").forEach(botao=>{
+
+    botao.addEventListener("click",()=>{
+
+        if(window.innerWidth<=900){
+
+            menuLateral.classList.remove("ativo");
+            menuOverlay.style.display="none";
+
+        }
+
+    });
+
+});
+
+
 // INICIALIZAÇÃO
 verificarExpirados();
 renderAlunos();

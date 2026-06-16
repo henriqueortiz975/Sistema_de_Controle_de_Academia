@@ -32,6 +32,7 @@ body{
     color:white;
     padding:25px;
     box-shadow:4px 0 10px rgba(0,0,0,.15);
+    z-index:2000;
 }
 
 .Esquerda h1{
@@ -88,6 +89,7 @@ body{
     box-shadow:0 4px 10px rgba(0,0,0,.15);
     margin-bottom:30px;
     border:1px solid #ceb029;
+    overflow-x:auto;
 }
 
 .card-topo{
@@ -111,7 +113,7 @@ form{
     gap:15px;
 }
 
-input, select{
+input,select{
     padding:12px;
     border:1px solid #222;
     border-radius:8px;
@@ -119,7 +121,7 @@ input, select{
     font-size:1rem;
 }
 
-input:focus, select:focus{
+input:focus,select:focus{
     outline:none;
     border-color:#ceb029;
 }
@@ -143,6 +145,13 @@ input:focus, select:focus{
     height:47px;
 }
 
+button{
+    transition:.3s;
+}
+
+button:active{
+    transform:scale(.98);
+}
 table{
     width:100%;
     border-collapse:collapse;
@@ -150,18 +159,18 @@ table{
 
 th{
     background:#ceb029;
-    color:white;
+    color:#fff;
 }
 
-th, td{
-    border:1px solid #ffffff;
+th,td{
+    border:1px solid #fff;
     padding:12px;
     text-align:center;
 }
 
 tr{
     background:#000;
-    color:white;
+    color:#fff;
 }
 
 .stats{
@@ -175,7 +184,7 @@ tr{
     flex:1;
     min-width:220px;
     background:#ceb029;
-    color:white;
+    color:#fff;
     text-align:center;
     padding:25px;
     border-radius:10px;
@@ -194,25 +203,32 @@ tr{
 
 #pesquisaAluno{
     flex:1;
+    width:100%;
 }
 
 #listaAlunosCards{
     display:grid;
     gap:20px;
+    width:100%;
 }
 
-.aluno-card, .Treino-card{
+.aluno-card,.Treino-card{
     background:#000;
     border-radius:12px;
     border:1px solid #ceb029;
     padding:20px;
-    color:white;
+    color:#fff;
     transition:.3s;
     margin-bottom:20px;
 }
 
-.aluno-card:hover, .Treino-card:hover{
+.aluno-card:hover,.Treino-card:hover{
     transform:translateY(-5px);
+}
+
+.aluno-card h3,.Treino-card h3{
+    color:#ceb029;
+    margin-bottom:10px;
 }
 
 .semana-treino{
@@ -224,11 +240,6 @@ tr{
     font-size:.9rem;
 }
 
-.aluno-card h3, .Treino-card h3{
-    color:#ceb029;
-    margin-bottom:10px;
-}
-
 .acoes-card{
     display:flex;
     gap:10px;
@@ -237,7 +248,7 @@ tr{
 
 .btn-excluir{
     background:#dc2626;
-    color:white;
+    color:#fff;
     border:none;
     padding:8px 12px;
     border-radius:6px;
@@ -248,48 +259,36 @@ tr{
     background:#b91c1c;
 }
 
-.participante-item{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:10px;
-    margin-bottom:10px;
-    background:#222;
-    border-radius:8px;
-}
-
-.participante-item span{
-    color:rgb(0, 0, 0);
-    font-weight:bold;
-    font-size:1rem;
-}
-
 .btn-editar{
     background:#2563eb;
-    color:white;
+    color:#fff;
     border:none;
     padding:8px 12px;
     border-radius:6px;
     cursor:pointer;
 }
 
-#alunoParticipante{
-    width: 340px;
-    padding: 12px;
-    font-size: 16px;
-}
-
 .btn-editar:hover{
     background:#1d4ed8;
 }
 
-.atrasado{
-    color:#ff0000;
-    font-weight:bold;
+.btn-pago{
+    background:#16a34a;
+    color:#fff;
+    border:none;
+    padding:8px 12px;
+    border-radius:6px;
+    cursor:pointer;
 }
+
+.btn-pago:hover{
+    background:#15803d;
+}
+
 .NovoTreino{
     margin-bottom:15px;
 }
+
 .participante-item{
     display:flex;
     justify-content:space-between;
@@ -300,17 +299,19 @@ tr{
     border-radius:8px;
 }
 
-.btn-pago{
-    background:#16a34a;
-    color:white;
-    border:none;
-    padding:8px 12px;
-    border-radius:6px;
-    cursor:pointer;
+.participante-item span{
+    color:#000;
+    font-weight:bold;
+    font-size:1rem;
 }
 
-.btn-pago:hover{
-    background:#15803d;
+#alunoParticipante{
+    width:100%;
+}
+
+.atrasado{
+    color:#ff0000;
+    font-weight:bold;
 }
 
 .pago{
@@ -329,58 +330,8 @@ input[type="checkbox"]{
     cursor:pointer;
 }
 
-#listaAlunosCards{
-    width:100%;
-}
-
-#pesquisaAluno{
-    width:100%;
-}
-
-#alunoParticipante{
-    width:100%;
-}
-
 .card, .aluno-card, .Treino-card, .modal{
     overflow-wrap:break-word;
-}
-
-button{
-    transition:.3s;
-}
-
-button:active{
-    transform:scale(.98);
-}
-
-.menu-toggle{
-    display:none;
-}
-
-.menu-overlay{
-    display:none;
-}
-
-.card{
-    overflow-x:auto;
-}
-
-.menu-toggle{
-    display:none;
-    position:fixed;
-    top:15px;
-    left:15px;
-    z-index:2000;
-    background:#ceb029;
-    color:#000;
-    border:none;
-    padding:12px 15px;
-    border-radius:8px;
-    font-size:1.4rem;
-    cursor:pointer;
-    font-weight:bold;
-    width:50px;
-    height:50px;
 }
 
 .overlay{
@@ -422,9 +373,46 @@ body.modal-aberto .modal, body.modal-aberto .overlay{
     pointer-events:auto;
 }
 
-/* ========================= */
-/* TABLET */
-/* ========================= */
+.menu-toggle{
+    display:none;
+    position:fixed;
+    top:15px;
+    left:15px;
+    z-index:3000;
+    background:#ceb029;
+    color:#000;
+    border:none;
+    padding:12px 15px;
+    border-radius:8px;
+    font-size:1.4rem;
+    cursor:pointer;
+    font-weight:bold;
+    width:50px;
+    height:50px;
+}
+
+.menu-overlay{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.5);
+    display:none;
+    z-index:1500;
+}
+
+@keyframes modalEntrada{
+    from{
+        opacity:0;
+        transform:translate(-50%,-50%) scale(.8);
+    }
+
+    to{
+        opacity:1;
+        transform:translate(-50%,-50%) scale(1);
+    }
+}
 
 @media (max-width:900px){
 
@@ -440,8 +428,8 @@ body.modal-aberto .modal, body.modal-aberto .overlay{
         width:300px;
         height:100vh;
         overflow-y:auto;
-        z-index:2000;
         transition:left .3s ease;
+        z-index:2000;
     }
 
     .Esquerda.ativo{
@@ -462,14 +450,14 @@ body.modal-aberto .modal, body.modal-aberto .overlay{
         width:100%;
     }
 
-    .topo-alunos{
-        flex-direction:column;
-    }
-
     .card-topo{
         flex-direction:column;
         align-items:stretch;
         gap:15px;
+    }
+
+    .topo-alunos{
+        flex-direction:column;
     }
 
     .stats{
@@ -498,10 +486,6 @@ body.modal-aberto .modal, body.modal-aberto .overlay{
         height:auto;
     }
 }
-
-/* ========================= */
-/* CELULAR */
-/* ========================= */
 
 @media (max-width:600px){
 
@@ -581,7 +565,7 @@ body.modal-aberto .modal, body.modal-aberto .overlay{
     }
 
     .Esquerda{
-        left:0 !important;
         position:relative;
+        left:0 !important;
     }
 }
