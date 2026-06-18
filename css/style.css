@@ -1,3 +1,18 @@
+:root{
+    --bg:#081024;
+    --surface:rgba(8,16,36,.90);
+    --surface-alt:rgba(17,28,56,.92);
+    --surface-soft:rgba(24,38,74,.85);
+    --accent:#f6c84f;
+    --accent-dark:#d1a42a;
+    --text:#e8edf8;
+    --muted:#94a3be;
+    --border:rgba(246,200,79,.18);
+    --danger:#ef4444;
+    --success:#22c55e;
+    --primary:#3b82f6;
+}
+
 *{
     margin:0;
     padding:0;
@@ -5,19 +20,25 @@
     font-family:'Segoe UI',sans-serif;
 }
 
-img{
-    display:block;
-    margin:20px auto;
-    border-radius:1000px;
+html{
+    scroll-behavior:smooth;
 }
 
 body{
-    background-image:url('https://acadbrasil.com.br/wp-content/uploads/2022/04/3-dicas-para-aproveitar-melhor-o-espaco-da-academia-1024x681.jpg');
+    min-height:100vh;
+    color:var(--text);
+    background-image:linear-gradient(rgba(3,11,31,.82), rgba(3,11,31,.82)), url('https://acadbrasil.com.br/wp-content/uploads/2022/04/3-dicas-para-aproveitar-melhor-o-espaco-da-academia-1024x681.jpg');
     background-size:cover;
     background-position:center;
     background-attachment:fixed;
-    background-color:rgba(0,0,0,.5);
-    background-blend-mode:darken;
+    background-repeat:no-repeat;
+}
+
+img{
+    display:block;
+    margin:20px auto;
+    border-radius:50%;
+    max-width:100%;
 }
 
 .container{
@@ -27,19 +48,19 @@ body{
 }
 
 .Esquerda{
-    width:300px;
-    background:linear-gradient(180deg,#ceb029,#ccc910);
-    color:white;
-    padding:25px;
-    box-shadow:4px 0 10px rgba(0,0,0,.15);
+    width:320px;
+    background:linear-gradient(180deg,rgba(9,24,63,.96),rgba(15,32,78,.96));
+    color:var(--text);
+    padding:32px 24px;
+    box-shadow:4px 0 30px rgba(0,0,0,.35);
     z-index:2000;
 }
 
 .Esquerda h1{
     text-align:center;
-    font-size:1.8rem;
-    margin-bottom:40px;
-    color:#000;
+    font-size:2rem;
+    margin-bottom:36px;
+    color:var(--accent);
 }
 
 .Esquerda ul{
@@ -47,26 +68,27 @@ body{
 }
 
 .Esquerda li{
-    margin-bottom:15px;
+    margin-bottom:16px;
 }
 
 .Esquerda button{
     width:100%;
-    padding:15px;
+    padding:14px 16px;
     border:none;
-    border-radius:8px;
-    background:#000;
-    color:#fff;
-    font-weight:bold;
+    border-radius:12px;
+    background:rgba(255,255,255,.08);
+    color:var(--text);
+    font-weight:700;
     cursor:pointer;
-    transition:.3s;
+    transition:transform .3s ease, background .3s ease, color .3s ease;
+    text-align:left;
     font-size:1rem;
 }
 
 .Esquerda button:hover{
-    transform:translateX(5px);
-    background:#eef3ff;
-    color:#000;
+    transform:translateX(6px);
+    background:rgba(246,200,79,.14);
+    color:var(--accent);
 }
 
 .content{
@@ -83,62 +105,76 @@ body{
 }
 
 .card{
-    background:#000;
-    padding:30px;
-    border-radius:12px;
-    box-shadow:0 4px 10px rgba(0,0,0,.15);
-    margin-bottom:30px;
-    border:1px solid #ceb029;
+    background:var(--surface);
+    padding:32px;
+    border-radius:20px;
+    box-shadow:0 24px 60px rgba(0,0,0,.28);
+    margin-bottom:32px;
+    border:1px solid var(--border);
     overflow-x:auto;
+    backdrop-filter:blur(10px);
 }
 
 .card-topo{
     display:flex;
     justify-content:space-between;
     align-items:center;
+    gap:20px;
 }
 
 h2{
-    color:#ceb029;
+    color:var(--accent);
     margin-bottom:20px;
+    font-size:1.9rem;
 }
 
 p{
-    color:#fff;
+    color:var(--muted);
+    line-height:1.7;
 }
 
 form{
     display:flex;
     flex-direction:column;
-    gap:15px;
+    gap:18px;
 }
 
 input,select{
-    padding:12px;
-    border:1px solid #222;
-    border-radius:8px;
-    background:#fdf4cc;
+    padding:14px 16px;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:14px;
+    background:rgba(255,255,255,.08);
+    color:var(--text);
     font-size:1rem;
+    transition:border-color .3s ease, background .3s ease;
+}
+
+input::placeholder,
+select::placeholder{
+    color:var(--muted);
 }
 
 input:focus,select:focus{
     outline:none;
-    border-color:#ceb029;
+    border-color:var(--accent);
+    background:rgba(255,255,255,.12);
 }
 
 .btn{
-    background:#ceb029;
-    color:#fff;
+    background:var(--accent);
+    color:#0b1026;
     border:none;
-    padding:12px;
-    border-radius:8px;
+    padding:14px 18px;
+    border-radius:14px;
     cursor:pointer;
-    font-weight:bold;
-    transition:.3s;
+    font-weight:700;
+    transition:transform .2s ease, background .3s ease;
+    box-shadow:0 10px 25px rgba(246,200,79,.25);
 }
 
 .btn:hover{
-    background:#e49e1d;
+    background:var(--accent-dark);
+    transform:translateY(-2px);
 }
 
 .bnt-aluno{
@@ -152,25 +188,32 @@ button{
 button:active{
     transform:scale(.98);
 }
+
 table{
     width:100%;
     border-collapse:collapse;
+    min-width:600px;
 }
 
 th{
-    background:#ceb029;
-    color:#fff;
+    background:rgba(246,200,79,.16);
+    color:var(--accent);
+    font-weight:700;
 }
 
 th,td{
-    border:1px solid #fff;
-    padding:12px;
+    border:1px solid rgba(255,255,255,.08);
+    padding:16px;
     text-align:center;
 }
 
 tr{
-    background:#000;
-    color:#fff;
+    background:rgba(255,255,255,.04);
+    color:var(--text);
+}
+
+tr:nth-child(even){
+    background:rgba(255,255,255,.02);
 }
 
 .stats{
@@ -183,16 +226,18 @@ tr{
 .stat{
     flex:1;
     min-width:220px;
-    background:#ceb029;
-    color:#fff;
+    background:var(--surface-alt);
+    color:var(--text);
     text-align:center;
-    padding:25px;
-    border-radius:10px;
+    padding:26px;
+    border-radius:18px;
+    border:1px solid rgba(246,200,79,.12);
 }
 
 .stat h3{
     font-size:2rem;
     margin-bottom:10px;
+    color:#fff;
 }
 
 .topo-alunos{
@@ -213,58 +258,60 @@ tr{
 }
 
 .aluno-card,.Treino-card{
-    background:#000;
-    border-radius:12px;
-    border:1px solid #ceb029;
-    padding:20px;
-    color:#fff;
-    transition:.3s;
+    background:rgba(10,18,44,.96);
+    border-radius:18px;
+    border:1px solid rgba(246,200,79,.14);
+    padding:24px;
+    color:var(--text);
+    transition:transform .3s ease, box-shadow .3s ease;
     margin-bottom:20px;
 }
 
 .aluno-card:hover,.Treino-card:hover{
-    transform:translateY(-5px);
+    transform:translateY(-6px);
+    box-shadow:0 20px 40px rgba(0,0,0,.25);
 }
 
 .aluno-card h3,.Treino-card h3{
-    color:#ceb029;
+    color:var(--accent);
     margin-bottom:10px;
 }
 
 .semana-treino{
-    background:#222;
-    padding:10px;
-    border-radius:6px;
-    border:1px solid #ceb029;
+    background:rgba(255,255,255,.05);
+    padding:12px;
+    border-radius:10px;
+    border:1px solid rgba(246,200,79,.12);
     margin-bottom:10px;
-    font-size:.9rem;
+    font-size:.95rem;
 }
 
 .acoes-card{
     display:flex;
     gap:10px;
     margin-top:15px;
+    flex-wrap:wrap;
 }
 
 .btn-excluir{
-    background:#dc2626;
+    background:var(--danger);
     color:#fff;
     border:none;
-    padding:8px 12px;
-    border-radius:6px;
+    padding:10px 14px;
+    border-radius:10px;
     cursor:pointer;
 }
 
 .btn-excluir:hover{
-    background:#b91c1c;
+    background:#c91f1f;
 }
 
 .btn-editar{
-    background:#2563eb;
+    background:var(--primary);
     color:#fff;
     border:none;
-    padding:8px 12px;
-    border-radius:6px;
+    padding:10px 14px;
+    border-radius:10px;
     cursor:pointer;
 }
 
@@ -273,16 +320,16 @@ tr{
 }
 
 .btn-pago{
-    background:#16a34a;
+    background:var(--success);
     color:#fff;
     border:none;
-    padding:8px 12px;
-    border-radius:6px;
+    padding:10px 14px;
+    border-radius:10px;
     cursor:pointer;
 }
 
 .btn-pago:hover{
-    background:#15803d;
+    background:#16a34a;
 }
 
 .NovoTreino{
@@ -293,15 +340,15 @@ tr{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:10px;
+    padding:14px;
     margin-bottom:10px;
-    background:#ceb029;
-    border-radius:8px;
+    background:rgba(246,200,79,.12);
+    border-radius:12px;
 }
 
 .participante-item span{
-    color:#000;
-    font-weight:bold;
+    color:#fff;
+    font-weight:700;
     font-size:1rem;
 }
 
@@ -310,18 +357,18 @@ tr{
 }
 
 .atrasado{
-    color:#ff0000;
-    font-weight:bold;
+    color:var(--danger);
+    font-weight:700;
 }
 
 .pago{
-    color:#16a34a;
-    font-weight:bold;
+    color:var(--success);
+    font-weight:700;
 }
 
 .pendente{
-    color:#dc2626;
-    font-weight:bold;
+    color:#fbbf24;
+    font-weight:700;
 }
 
 input[type="checkbox"]{
@@ -337,7 +384,7 @@ input[type="checkbox"]{
 .overlay{
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,.45);
+    background:rgba(0,0,0,.65);
     backdrop-filter:blur(8px);
     display:none;
     z-index:999;
@@ -348,20 +395,21 @@ input[type="checkbox"]{
     top:50%;
     left:50%;
     transform:translate(-50%,-50%) scale(.9);
-    width:500px;
+    width:520px;
     max-width:90%;
-    background:#000;
-    border:2px solid #ceb029;
-    border-radius:16px;
-    padding:30px;
+    background:rgba(8,16,36,.98);
+    border:1px solid rgba(246,200,79,.28);
+    border-radius:24px;
+    padding:32px;
     display:none;
     z-index:1000;
-    box-shadow:0 20px 50px rgba(0,0,0,.5);
+    box-shadow:0 30px 80px rgba(0,0,0,.35);
     animation:modalEntrada .25s ease;
 }
 
 .modal h2{
     text-align:center;
+    color:var(--accent);
 }
 
 body.modal-aberto .container{
@@ -379,16 +427,17 @@ body.modal-aberto .modal, body.modal-aberto .overlay{
     top:15px;
     left:15px;
     z-index:3000;
-    background:#ceb029;
-    color:#000;
+    background:var(--accent);
+    color:#081024;
     border:none;
     padding:12px 15px;
-    border-radius:8px;
+    border-radius:12px;
     font-size:1.4rem;
     cursor:pointer;
     font-weight:bold;
     width:50px;
     height:50px;
+    box-shadow:0 10px 25px rgba(0,0,0,.2);
 }
 
 .menu-overlay{
@@ -508,7 +557,7 @@ body.modal-aberto .modal, body.modal-aberto .overlay{
     }
 
     .card{
-        padding:15px;
+        padding:20px;
     }
 
     .modal{
@@ -540,11 +589,11 @@ body.modal-aberto .modal, body.modal-aberto .overlay{
 
     th, td{
         font-size:.85rem;
-        padding:8px;
+        padding:10px;
     }
 
     .aluno-card, .Treino-card{
-        padding:15px;
+        padding:18px;
     }
 
     .tabelaresumo{
